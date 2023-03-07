@@ -1,0 +1,41 @@
+Header As CanvasComponent:
+    colorHeader: ="Texto"
+    COLORheader1: =RGBA(0, 0, 0, 1)
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =60
+    mostrarIcono: =true
+    txtTituloInput: ="Texto"
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Rectangle1 As rectangle:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Fill: =Header.COLORheader1
+        Height: =60
+        Width: =640
+        ZIndex: =1
+
+    txtTitulo As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Font: =Font.Verdana
+        Height: =60
+        Size: =18
+        Text: =Header.txtTituloInput
+        Width: =640
+        ZIndex: =2
+
+    Image1 As image:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Image: =logo_dulcor
+        Visible: =Header.mostrarIcono
+        Width: =92
+        ZIndex: =3
+

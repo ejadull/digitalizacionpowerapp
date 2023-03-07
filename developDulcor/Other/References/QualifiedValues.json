@@ -1,0 +1,57 @@
+{
+  "QualifiedValues": [
+    {
+      "Kind": "default.cds_pss_seguimientocomprobantes_forms",
+      "Namespace": "Seguimiento Comprobantes (Formularios)",
+      "Values": {
+        "Información": "76d709bf-8c22-4ac1-935b-cfe3dcdb7b93"
+      }
+    },
+    {
+      "Kind": "default.cds_contact_forms",
+      "Namespace": "Contactos (Formularios)",
+      "Values": {
+        "Actualizar contacto": "26843818-6508-4afe-9342-5fae2ebf15ca",
+        "AI for Sales": "293c878f-f068-40a0-ae48-4297e060871c",
+        "Casos del cliente": "5194a156-576a-4fa1-bf1a-abf7a41b0e8c",
+        "Casos recientes y derechos": "f3b707fb-3b5f-45f9-9c6b-5e573bb5d19e",
+        "Contact": "1fed44d1-ae68-4a41-bd2b-f13acac4acfa",
+        "Contacto para experiencia de sesiones múltiples": "e06af4d1-2812-45c7-a9c2-9fb73fee7bec",
+        "Contacto para experiencia interactiva": "cc760212-3eab-4009-b5c3-ea9cf6f3e141",
+        "Creación rápida de contacto": "661157fe-2fc9-4eaa-835f-5bfa2f7b64f7",
+        "Formulario de tarjeta de contacto": "bc0f68dd-a4b1-4a8f-bed3-c8f5db2f89cf",
+        "Formulario de tarjeta de persona dinámica": "449faa0e-f471-48ec-87d0-4719909546d2",
+        "Formulario en contexto": "4c9c89b9-f909-4b34-8f63-b87d7ff2f0c4",
+        "Formulario rápido de contacto": "bdb0ae1c-32fa-4374-b637-8dafe107bc44",
+        "Información": "894cc46a-b0cb-4ab0-8bf6-200544e46a2d",
+        "Panel de contactos": "70ad8b15-e3f3-4d7d-9e4b-16cb4e51b484",
+        "Panel de referencia de contacto": "d880c3cf-80e2-42f3-82f9-24d040d09f17",
+        "Perfil del cliente": "05ea391a-d034-43fe-849b-b4fa3213a2b2",
+        "Perfiles sociales": "7bb87dfd-ec3e-4ed9-8e3e-5725d3067295",
+        "tarjeta de contacto": "707fc57b-c5e6-471b-a180-e37ed28a38e2",
+        "Tarjeta de contacto de App for Outlook": "cdbb9298-3b2e-41f3-8f4a-0168d6b09fc4",
+        "tarjeta de contacto de cuenta": "29de27bc-a257-4f29-99cf-bab4a84e688f",
+        "TimelineWallControl - Contacto - Principal": "986258b5-2985-4ae0-970a-5e1d108ab793",
+        "Vista rápida de contacto de App for Outlook": "3d22ab88-96c8-4b3f-a533-d4827e2925c9"
+      }
+    },
+    {
+      "Kind": "default.cds_systemuser_forms",
+      "Namespace": "Usuarios (Formularios)",
+      "Values": {
+        "Formulario de usuario – Business": "c2413504-7eb2-4c59-a087-95d819866114",
+        "Formulario de ventana de jerarquía de usuarios": "c68d6c09-d7a7-4959-8d0f-44b8cff9b452",
+        "Información": "094fb08a-77bb-49e0-b7ea-8dbddfd01294",
+        "Usuario": "c2cd9e55-d4b4-4b55-9951-16ead79643e5",
+        "Usuario de la aplicación": "d26924ef-4d80-46f7-ab1d-e6ae80a54ce8"
+      }
+    },
+    {
+      "Kind": "default.cds_pss_destinos_forms",
+      "Namespace": "Destino (Formularios)",
+      "Values": {
+        "Información": "baed4b66-c83a-4a1d-9706-b6f451b16c7f"
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+"srcDigitalizar As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
+
+    Canvas2 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =
+        ZIndex: =3
+
+        DataCard2 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Parent.Height - 100
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+    Header_3 As Header:
+        mostrarIcono: =false
+        txtTituloInput: ="Digitalizar Factura"
+        ZIndex: =4
+
+    Icon2 As icon.Check:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Icon: =Icon.Check
+        OnSelect: = Back(ScreenTransition.Cover)
+        Width: =60
+        X: =560
+        ZIndex: =5
+
+    camcam As camera:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Camera: =0//Dropdown1.Selected.Id
+        Height: =322
+        OnSelect: |-
+            =Collect( MyPixs, {Url: camcam.Photo} )
+        Width: =628
+        X: =6
+        Y: =170
+        ZIndex: =6
+
+    Image6 As image:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Height: =420
+        Image: =Last(MyPixs).Url
+        Width: =473
+        X: =89
+        Y: =619
+        ZIndex: =7
+
+    Label2 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        BorderColor: =RGBA(205, 209, 213, 1)
+        BorderThickness: =1
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        FocusedBorderThickness: =1
+        Height: =70
+        Size: =21
+        Text: ="VISTA PREVIA"
+        Width: =640
+        Y: =529
+        ZIndex: =8
+
+    Icon3 As icon.Cancel:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Icon: =Icon.Cancel
+        OnSelect: =Collect(MyPixs, {} ); Back(ScreenTransition.Cover)
+        Width: =60
+        X: =12
+        ZIndex: =9
+
+    Dropdown1 As dropdown:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        ChevronBackground: =RGBA(100, 118, 132, 1)
+        ChevronDisabledBackground: =RGBA(166, 166, 166, 1)
+        ChevronDisabledFill: =RGBA(244, 244, 244, 1)
+        ChevronHoverBackground: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Height: =42
+        HoverColor: =RGBA(0, 0, 0, 1)
+        HoverFill: =RGBA(205, 209, 213, 1)
+        Items: =camcam.AvailableDevices
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(32, 54, 71, 1)
+        SelectionFill: =RGBA(100, 118, 132, 1)
+        Size: =12
+        Visible: =false
+        Width: =456
+        X: =92
+        Y: =85
+        ZIndex: =10
+
+    Label2_1 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        BorderColor: =RGBA(205, 209, 213, 1)
+        BorderThickness: =1
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        FocusedBorderThickness: =1
+        Height: =70
+        Size: =11
+        Text: ="PRESIONE LA IMAGEN PARA UNA CAPTURA"
+        Width: =640
+        Y: =134
+        ZIndex: =11
+

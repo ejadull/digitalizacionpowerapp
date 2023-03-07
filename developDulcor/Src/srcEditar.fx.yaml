@@ -1,0 +1,1383 @@
+"srcEditar As screen.'phoneLayout_HeaderAndForm_ver3.0'":
+    BackgroundImage: ='FondoHomeSinLogo-dulcor2'
+    ImagePosition: =ImagePosition.Fill
+    LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
+    OnVisible: |
+        =UpdateContext(
+            {
+                estado_recepcion_obj: First(
+                    Filter(
+                        estadoRecepcionOpcionesCollect,
+                        nombre = Text(item3.'Estado de Recepción')
+                    )
+                ),
+                mostrarModalRefreshEdit:false
+        
+            }
+        );
+        UpdateContext({estado_recepcion_txt: Text(item3.'Estado de Recepción')})
+
+    lblerrores_1 As label:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =70
+        Size: =21
+        Text: =First(Errors( 'Seguimiento Comprobantes' )).Message
+        Visible: =false
+        Width: =560
+        Y: =1066
+        ZIndex: =1
+
+    Header_4 As Header:
+        COLORheader1: |
+            =Switch(Text(estado_recepcion_obj.nombre),
+            "Recibido", RGBA(152, 208, 70, 1),
+            "Observado", RGBA(255, 255, 0, 1),
+            "Rechazado", RGBA(255, 0, 0, 1),
+            "",RGBA(237, 237, 237, 1)
+            )
+            /*
+            Switch(estado_recepcion_txt;//Text(item3.'Estado de Recepción');
+            "Recibido"; RGBA(152; 208; 70; 1);
+            "Observado"; RGBA(255; 255; 0; 1);
+            "Rechazado"; RGBA(255; 0; 0; 1);
+            "";RGBA(237; 237; 237; 1)
+            )
+            */
+        mostrarIcono: =false
+        txtTituloInput: ="Estás actualizando... "
+        ZIndex: =2
+
+    IconAccept1_1 As icon.Check:
+        AccessibleLabel: =Self.Tooltip
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Icon: =Icon.Check
+        OnSelect: |
+            =//SubmitForm(frmEditar);;Collect(MyPixs; {} );;Navigate(srcOk;ScreenTransition.Cover)
+            
+            If(
+                Connection.Connected,
+                UpdateContext({mostrarModalRefreshEdit: true});
+                //ONLINE, actualiza item y actualiza las collecciones
+                Patch('Seguimiento Comprobantes' , LookUp('Seguimiento Comprobantes', pss_numerodeseguimiento = item3.pss_numerodeseguimiento),
+                {
+                    Observaciones: txtObservaciones_1.Text,
+                    'Foto Adjunta 1': foto1.Image,
+                    'Foto Adjunta 2': foto2.Image,
+                    //'Foto Adjunta 3': foto3.Image;
+                    //Online: false;//se fambia porque fue modificado
+                    'Estado de Recepción': estado_recepcion_obj.optionSet//    cbmEstado_2.Selected.optionSet
+                }); 
+                //Limpieza
+                //Clear(contactosClientesCollect);;
+                //Clear(contactosTransportesCollect);;
+                Clear(seguimientoFacturasCollect);
+                //ClearData("contactosClientesData");;
+                //ClearData("contactosTransportesData");;
+                ClearData("seguimientoFacturasData");
+                
+                //actualizo de dataverse
+                //Concurrent(
+                    /*
+                    Collect(contactosClientesCollect;
+                        SortByColumns(
+                            Filter(Contactos; 
+                                    statecode exactin  "Activo" &&  
+                                    pss_tipodecontactoseguimiento exactin "Cliente"  &&  
+                                    !IsBlank(pss_cuit) && pss_cuit <> ""); 
+                                    "pss_nombrefullcontacto"; Ascending) 
+                        
+                    );
+                    Collect(contactosTransportesCollect;
+                        SortByColumns(
+                            Filter(Contactos; 
+                            statecode exactin  "Activo" &&  
+                            pss_tipodecontactoseguimiento exactin "Transporte"  &&  
+                            !IsBlank(pss_razonsocial) && pss_razonsocial <> ""); 
+                            "pss_nombrefullcontacto"; Ascending) 
+                        
+                    );
+                    */
+                    Collect(seguimientoFacturasCollect,
+                        AddColumns(
+                             SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo" ),"modifiedon", SortOrder.Descending), 
+                            "IdLocal", GUID(), "Online", true
+                        )
+                    );
+                //);;
+             
+                //ClearData("contactosClientesData");;
+                //ClearData("contactosTransportesData");;
+                ClearData("seguimientoFacturasData");
+                //guardo en memoria
+                /*
+                SaveData(
+                    contactosClientesCollect;
+                    "contactosClientesData"
+                );;
+                SaveData(
+                    contactosTransportesCollect;
+                    "contactosTransportesData"
+                );;
+                */
+                SaveData(
+                    seguimientoFacturasCollect,
+                    "seguimientoFacturasData"
+                );
+                SaveData(
+                    tipoContactoOpcionesCollect,
+                    "tipoContactoOpcionesData"
+                );
+                SaveData(
+                    estadoRecepcionOpcionesCollect,
+                    "estadoRecepcionOpcionesData"
+                );
+                UpdateContext({mostrarModalRefreshEdit: false});
+                //flujo comun
+                Clear(MyPixs);ResetForm(frmAlta_1);Navigate(srcInicio,ScreenTransition.Cover),
+                //OFFLINE
+                Patch(seguimientoFacturasCollect, LookUp(seguimientoFacturasCollect, IdLocal = item3.IdLocal),
+                {
+                    //'Numero de Comprobante': txtComprobante_1.Text;
+                    //Cliente: cmbCliente_1.Selected;
+                    //Transportista: cmbTransportista.Selected;
+                    Observaciones: txtObservaciones_1.Text,
+                    //Attachments: tatAttachments_1.Attachments;//no usa r attachments usar campo imagen o doc por separado
+                // Name:txtName_2.Text;
+                    //IdLocal: GUID();
+                    'Foto Adjunta 1': foto1.Image,
+                    'Foto Adjunta 2': foto2.Image,
+                    'Foto Adjunta 3': foto3.Image,
+                    //'Foto Adjunta 4': foto3;// de momento no usar
+                    Online: false,//se fambia porque fue modificado
+                    'Estado de Recepción': estado_recepcion_obj.optionSet//    cbmEstado_2.Selected.optionSet
+                    
+                });
+                Clear(MyPixs);ResetForm(frmAlta_1);Navigate(srcInicio,ScreenTransition.Cover)
+                
+            )
+        PaddingBottom: =5
+        PaddingLeft: =5
+        PaddingRight: =5
+        PaddingTop: =5
+        PressedFill: =RGBA(255, 255, 255, 0.3)
+        TabIndex: =0
+        Tooltip: ="Enviar elemento"
+        Width: =60
+        X: =566
+        ZIndex: =3
+
+    frmEditar As form:
+        AcceptsFocus: =false
+        BorderColor: =RGBA(32, 54, 71, 1)
+        DataSource: =seguimientoFacturasCollect //'Seguimiento Comprobantes'// 
+        Height: =953
+        Item: =item3
+        OnFailure: =Notify("Ocurió un error al intentar guardar el comprobante", NotificationType.Error, 1500) 
+        OnSuccess: =Notify("Los datos se guardaron correctamente", NotificationType.Success, 1500)
+        Width: =Parent.Width
+        Y: =58
+        ZIndex: =4
+
+        "'Numero de Comprobante_DataCard2_1' As typedDataCard.textualEditCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_numerodecomprobante"
+            Default: =ThisItem.'Numero de Comprobante'
+            DisplayMode: =DisplayMode.Disabled //Parent.DisplayMode
+            DisplayName: ="Número de Comprobante"//DataSourceInfo([@'Seguimiento Comprobantes'];DataSourceInfo.DisplayName;"pss_numerodecomprobante")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Seguimiento Comprobantes'], DataSourceInfo.MaxLength, "pss_numerodecomprobante")
+            Required: =true
+            Update: =txtComprobante_1.Text
+            Width: =640
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            DataCardKey2_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            txtComprobante_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =If(And(Not(IsBlank(barcode2)),Not(barcode2=""),Not(barcode2="Valor de ejemplo"),Not(BarcodeScanner1_1.Value="Valor de ejemplo")),barcode2, Parent.Default)
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                Height: =70
+                HoverBorderColor: =RGBA(32, 54, 71, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2_1.Y + DataCardKey2_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage8_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =11
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txtComprobante_1.Y + txtComprobante_1.Height
+                ZIndex: =3
+
+            StarVisible8_1 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey2_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2_1.Y
+                ZIndex: =4
+
+        Cliente_DataCard2_1 As typedDataCard.comboBoxEditCard:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_Cliente"
+            Default: =ThisItem.Cliente
+            DisplayMode: =DisplayMode.Disabled  //Parent.DisplayMode
+            DisplayName: ="Cliente"////DataSourceInfo([@'Seguimiento Comprobantes'];DataSourceInfo.DisplayName;"pss_Cliente")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =cmbCliente_1.Selected
+            Width: =640
+            WidthFit: =false
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey7_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            cmbCliente_1 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(100, 118, 132, 1)
+                ChevronDisabledBackground: =RGBA(166, 166, 166, 1)
+                ChevronDisabledFill: =RGBA(244, 244, 244, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayFields: =["pss_nombrefullcontacto"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                Items: |
+                    =contactosClientesCollect//SortByColumns(contactosClientesCollect; "pss_nombrefullcontacto"; Ascending)  //Choices([@'Seguimiento Comprobantes'].pss_Cliente)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedColor: =RGBA(255, 255, 255, 1)
+                PressedFill: =RGBA(32, 54, 71, 1)
+                SearchFields: =["pss_nombrefullcontacto"]
+                SearchItems: |-
+                    =Search(contactosClientesCollect//SortByColumns(contactosClientesCollect; "pss_nombrefullcontacto"; Ascending)  //Choices([@'Seguimiento Comprobantes'].pss_Cliente)
+                    ,cmbCliente_1.SearchText,"pss_nombrefullcontacto")
+                SelectionFill: =RGBA(100, 118, 132, 1)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey7_1.Y + DataCardKey7_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =cmbCliente_1.Y + cmbCliente_1.Height
+                ZIndex: =3
+
+            StarVisible5_1 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey7_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7_1.Y
+                ZIndex: =4
+
+        Transportista_DataCard3 As typedDataCard.comboBoxEditCard:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_Transportista"
+            Default: =ThisItem.Transportista
+            DisplayMode: =DisplayMode.Disabled
+            DisplayName: ="Transportista"//DataSourceInfo([@'Seguimiento Comprobantes'];DataSourceInfo.DisplayName;"pss_Transportista")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =cmbTransportistaEdit.Selected
+            Visible: =true
+            Width: =640
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey25 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            cmbTransportistaEdit As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(100, 118, 132, 1)
+                ChevronDisabledBackground: =RGBA(166, 166, 166, 1)
+                ChevronDisabledFill: =RGBA(244, 244, 244, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayFields: =["pss_nombrefullcontacto"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                IsSearchable: =false
+                Items: =contactosTransportesCollect  //Choices([@'Seguimiento Comprobantes'].pss_Transportista)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedColor: =RGBA(255, 255, 255, 1)
+                PressedFill: =RGBA(32, 54, 71, 1)
+                SearchFields: =["pss_nombrefullcontacto"]
+                SearchItems: =[]
+                SelectionFill: =RGBA(100, 118, 132, 1)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey25.Y + DataCardKey25.Height + 5
+                ZIndex: =2
+
+            ErrorMessage22 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =cmbTransportistaEdit.Y + cmbTransportistaEdit.Height
+                ZIndex: =3
+
+            StarVisible22 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey25.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey25.Y
+                ZIndex: =4
+
+        Destino_DataCard1 As typedDataCard.comboBoxEditCard:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_Destino"
+            Default: =ThisItem.Destino
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_Destino")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =cmbDestino.Selected
+            Width: =640
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey26 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            cmbDestino As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(100, 118, 132, 1)
+                ChevronDisabledBackground: =RGBA(166, 166, 166, 1)
+                ChevronDisabledFill: =RGBA(244, 244, 244, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(22, 38, 50, 1)
+                DisabledFill: =RGBA(245, 246, 247, 1)
+                DisplayFields: =["pss_name"]
+                DisplayMode: =DisplayMode.Disabled//Parent.DisplayMode
+                Height: =70
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                IsSearchable: =false
+                Items: =Choices([@'Seguimiento Comprobantes'].pss_Destino)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedColor: =RGBA(255, 255, 255, 1)
+                PressedFill: =RGBA(32, 54, 71, 1)
+                SearchFields: =["pss_name"]
+                SearchItems: =[]
+                SelectionFill: =RGBA(100, 118, 132, 1)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey26.Y + DataCardKey26.Height + 5
+                ZIndex: =2
+
+            ErrorMessage23 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =cmbDestino.Y + cmbDestino.Height
+                ZIndex: =3
+
+            StarVisible23 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey26.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey26.Y
+                ZIndex: =4
+
+        "'Estado de Recepción_DataCard4' As typedDataCard.comboBoxOptionSetSingleEditCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_estadoderecepcion"
+            Default: =ThisItem.'Estado de Recepción'
+            DisplayMode: =DisplayMode.Edit
+            DisplayName: ="Estado de Recepción"//DataSourceInfo([@'Seguimiento Comprobantes'];DataSourceInfo.DisplayName;"pss_estadoderecepcion")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =//DataCardValue2.Selected.Value
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey10 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            cbmEstado_2 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                ChevronBackground: =RGBA(100, 118, 132, 1)
+                ChevronDisabledBackground: =RGBA(166, 166, 166, 1)
+                ChevronDisabledFill: =RGBA(244, 244, 244, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(100, 118, 132, 1), -20%)
+                ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                DefaultSelectedItems: =estado_recepcion_obj//[Parent.Default]
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayFields: =["nombre"]
+                DisplayMode: =Parent.DisplayMode
+                Height: =70
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                IsSearchable: =false
+                Items: =estadoRecepcionOpcionesCollect //Choices('Estado de Recepción (Seguimiento Comprobantes)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedColor: =RGBA(255, 255, 255, 1)
+                PressedFill: =RGBA(32, 54, 71, 1)
+                SearchFields: =["nombre"]
+                SearchItems: =[]
+                SelectionFill: =RGBA(100, 118, 132, 1)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =cbmEstado_2.Y + cbmEstado_2.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey10.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey10.Y
+                ZIndex: =4
+
+        Observaciones_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_observaciones"
+            Default: =ThisItem.Observaciones
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Observaciones" //DataSourceInfo([@'Seguimiento Comprobantes'];DataSourceInfo.DisplayName;"pss_observaciones")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =96
+            MaxLength: =1500//DataSourceInfo([@'Seguimiento Comprobantes']; DataSourceInfo.MaxLength; "pss_observaciones")
+            Required: =false
+            Update: =txtObservaciones_1.Text
+            Width: =640
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey6_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            txtObservaciones_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                Height: =149
+                HoverBorderColor: =RGBA(32, 54, 71, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey6_1.Y + DataCardKey6_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =txtObservaciones_1.Y + txtObservaciones_1.Height
+                ZIndex: =3
+
+            StarVisible4_1 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey6_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6_1.Y
+                ZIndex: =4
+
+        Name_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_name"
+            Default: =ThisItem.Name
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_name")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Seguimiento Comprobantes'], DataSourceInfo.MaxLength, "pss_name")
+            Required: =true
+            Update: =DataCardValue1_1.Text
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey1_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default//txtComprobante_1.Text & "_" & Text(Now(); "yyymmddHHmmss")
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                Height: =70
+                HoverBorderColor: =RGBA(32, 54, 71, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(205, 209, 213, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey1_1.Y + DataCardKey1_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1_1.Y + DataCardValue1_1.Height
+                ZIndex: =3
+
+            StarVisible1_1 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey1_1.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1_1.Y
+                ZIndex: =4
+
+        "'Numero de Seguimiento_DataCard1_1' As typedDataCard.textualViewCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_numerodeseguimiento"
+            Default: =ThisItem.'Numero de Seguimiento'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_numerodeseguimiento")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =40
+            Required: =false
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey3_1 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =21
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3_1 As label:
+                AutoHeight: =true
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =Parent.DisplayMode
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: =Parent.Default
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3_1.Y + DataCardKey3_1.Height + 5
+                ZIndex: =2
+
+        "'Foto Adjunta 1_DataCard2' As typedDataCard.addLargePictureCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_adjunto1"
+            Default: =ThisItem.'Foto Adjunta 1'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_adjunto1")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =97
+            Required: =false
+            Update: =foto1.Image
+            Width: =640
+            WidthFit: =false
+            X: =0
+            Y: =8
+            ZIndex: =1
+
+            DataCardKey21 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            foto1 As image:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                Height: =AddPicture4.Height
+                Image: =If(IsBlank(AddPicture4.Media), Parent.Default, AddPicture4.Media)
+                Tooltip: =Parent.DisplayName
+                Width: =AddPicture4.Width
+                X: =AddPicture4.X
+                Y: =AddPicture4.Y
+                ZIndex: =2
+
+            AddPicture4 As addMedia:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =60
+                Width: =200
+                X: =30
+                Y: =DataCardKey21.Y + DataCardKey21.Height + 5
+                ZIndex: =3
+
+            ErrorMessage18 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =foto1.Y + foto1.Height
+                ZIndex: =4
+
+            StarVisible18 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey21.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey21.Y
+                ZIndex: =5
+
+        "'Foto Adjunta 2_DataCard2' As typedDataCard.addLargePictureCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_adjunto2"
+            Default: =ThisItem.'Foto Adjunta 2'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_adjunto2")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =foto2.Image
+            Width: =640
+            X: =0
+            Y: =9
+            ZIndex: =1
+
+            DataCardKey22 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            foto2 As image:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                Height: =AddPicture5.Height
+                Image: =If(IsBlank(AddPicture5.Media), Parent.Default, AddPicture5.Media)
+                Tooltip: =Parent.DisplayName
+                Width: =AddPicture5.Width
+                X: =AddPicture5.X
+                Y: =AddPicture5.Y
+                ZIndex: =2
+
+            AddPicture5 As addMedia:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =60
+                Width: =200
+                X: =30
+                Y: =DataCardKey22.Y + DataCardKey22.Height + 5
+                ZIndex: =3
+
+            ErrorMessage20 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =foto2.Y + foto2.Height
+                ZIndex: =4
+
+            StarVisible20 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey22.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey22.Y
+                ZIndex: =5
+
+        "'Foto Adjunta 3_DataCard2' As typedDataCard.addLargePictureCard":
+            BorderColor: =RGBA(32, 54, 71, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="pss_adjunto3"
+            Default: =ThisItem.'Foto Adjunta 3'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Seguimiento Comprobantes'],DataSourceInfo.DisplayName,"pss_adjunto3")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =foto3.Image
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+            DataCardKey24 As label:
+                AutoHeight: =true
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =48
+                Size: =11
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            foto3 As image:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                Height: =AddPicture6.Height
+                Image: =If(IsBlank(AddPicture6.Media), Parent.Default, AddPicture6.Media)
+                Tooltip: =Parent.DisplayName
+                Width: =AddPicture6.Width
+                X: =AddPicture6.X
+                Y: =AddPicture6.Y
+                ZIndex: =2
+
+            AddPicture6 As addMedia:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =60
+                Width: =200
+                X: =30
+                Y: =DataCardKey24.Y + DataCardKey24.Height + 5
+                ZIndex: =3
+
+            ErrorMessage21 As label:
+                AutoHeight: =true
+                Color: =RGBA(168, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =foto3.Y + foto3.Height
+                ZIndex: =4
+
+            StarVisible21 As label:
+                Align: =Align.Center
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =DataCardKey24.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey24.Y
+                ZIndex: =5
+
+    Image4_1 As image:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Height: =74
+        Image: ='8201368_scan_camera_photo_ui_image_icon'
+        OnSelect: =Collect(MyPixs, {} );Navigate(srcDigitalizar,ScreenTransition.Cover)
+        Visible: =false
+        Width: =66
+        X: =158
+        Y: =60
+        ZIndex: =5
+
+    Image5_1 As image:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Height: =81
+        Image: ='9035834_barcode_sharp_icon'
+        Visible: =false
+        Width: =133
+        X: =479
+        Y: =56
+        ZIndex: =6
+
+    Label1_2 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =21
+        Size: =8
+        Text: ="DIGITALIZAR FACTURA"
+        Visible: =false
+        Width: =125
+        X: =129
+        Y: =134
+        ZIndex: =7
+
+    Label1_3 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =21
+        Size: =8
+        Text: ="ESCANEAR CÓDIGO"
+        Visible: =false
+        Width: =109
+        X: =491
+        Y: =136
+        ZIndex: =8
+
+    BarcodeScanner1_1 As barcodeScanner:
+        Color: =RGBA(0, 0, 0, 0)
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 0.08)
+        Fill: =RGBA(0, 0, 0, 0)
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        HoverColor: =RGBA(255, 255, 255, 1)
+        HoverFill: =RGBA(0, 0, 0, 0)
+        OnScan: |-
+            =UpdateContext({ barcode2 : BarcodeScanner1_1.Value})
+        Size: =24
+        Text: =""
+        Visible: =false
+        Width: =109
+        X: =491
+        Y: =62
+        ZIndex: =9
+
+    "galEstadosRecep_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Height: =71
+        Items: =estadoRecepcionOpcionesCollect
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =0
+        Width: =432
+        WrapCount: =3
+        X: =103
+        Y: =1011
+        ZIndex: =10
+
+        Title10_1 As label:
+            Align: =Align.Center
+            BorderColor: |+
+                =//transparente 
+                RGBA(0, 0, 0, 0)
+                //If(And(ThisItem.nombre = "Recibido"; Text(item3.'Estado de Recepción') = "Recibido");RGBA(54; 176; 75; 1);RGBA(0; 0; 0; 0));
+                //If(And(ThisItem.nombre = "Observado"; Text(item3.'Estado de Recepción') = "Observado");RGBA(255; 191; 0; 1);RGBA(118; 0; 0; 1))
+                
+            BorderThickness: =2
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Fill: |
+                =Switch(ThisItem.nombre,
+                "Recibido", RGBA(152, 208, 70, 1),
+                "Observado", RGBA(255, 255, 0, 1),
+                "Rechazado", RGBA(255, 0, 0, 1))
+            FontWeight: =FontWeight.Semibold
+            Height: =75
+            HoverFill: =RGBA(204, 204, 204, 1)
+            OnSelect: |-
+                =UpdateContext({ estado_recepcion_obj: ThisItem })
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =11
+            Text: =ThisItem.nombre
+            Width: =140
+            X: =
+            ZIndex: =1
+
+        NextArrow10_1 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(32, 54, 71, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Height: =1
+            Icon: =Icon.ChevronRight
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Ver los detalles del elemento"
+            Visible: =false
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            ZIndex: =2
+
+        Separator10_1 As rectangle:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Fill: =RGBA(32, 54, 71, 1)
+            Height: =1
+            OnSelect: =Select(Parent)
+            Visible: =false
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+    IconCancel1_1 As icon.Cancel:
+        AccessibleLabel: =Self.Tooltip
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Icon: =Icon.Cancel
+        OnSelect: =Collect(MyPixs, {} );Back()
+        PaddingBottom: =5
+        PaddingLeft: =5
+        PaddingRight: =5
+        PaddingTop: =5
+        PressedFill: =RGBA(255, 255, 255, 0.3)
+        TabIndex: =0
+        Tooltip: ="Cancelar elemento"
+        Width: =60
+        X: =13
+        ZIndex: =18
+
+    ModalRefresh_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =20
+
+        Rectangle3_1 As rectangle:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Fill: =RGBA(230, 230, 230, 0.7)
+            Height: =1136
+            Visible: =mostrarModalRefreshEdit
+            Width: =640
+            ZIndex: =11
+
+        Rectangle4_1 As rectangle:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =502
+            Visible: =mostrarModalRefreshEdit
+            Width: =586
+            X: =27
+            Y: =241
+            ZIndex: =12
+
+        Label3_1 As label:
+            Align: =Align.Center
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =70
+            Size: =21
+            Text: ="Aguarde un momento..."
+            Visible: =mostrarModalRefreshEdit
+            Width: =640
+            Y: =386
+            ZIndex: =13
+
+        Icon7_1 As icon.Globe:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(32, 54, 71, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Icon: =Icon.Globe
+            Visible: =mostrarModalRefreshEdit
+            X: =455
+            Y: =488
+            ZIndex: =14
+
+        Icon8_1 As icon.Sync:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(32, 54, 71, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Icon: =Icon.Sync
+            Visible: =mostrarModalRefreshEdit
+            X: =288
+            Y: =488
+            ZIndex: =15
+
+        Label6_1 As label:
+            Align: =Align.Center
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =78
+            Size: =21
+            Text: =">>>>>>"
+            Visible: =mostrarModalRefreshEdit
+            Width: =627
+            X: =13
+            Y: =584
+            ZIndex: =16
+
+        Icon9_1 As icon.Database:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(32, 54, 71, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Icon: =Icon.Database
+            Visible: =mostrarModalRefreshEdit
+            X: =133
+            Y: =488
+            ZIndex: =17
+

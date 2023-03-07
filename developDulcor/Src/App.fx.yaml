@@ -1,0 +1,99 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |+
+        =//declaracion de variables GLOBALES, colecciones y VARS
+        
+        //SIEMPRE
+        Collect(tipoContactoOpcionesCollect,  Table(
+                {
+                    nombre: "Cliente",
+                    valor: 100000000
+                },
+                {
+                    nombre: "Transporte",
+                    valor: 100000001
+                },
+                {
+                    nombre: "Otro",
+                    valor: 100000002
+                }
+            ));
+            
+        Collect(estadoRecepcionOpcionesCollect, Table(
+                {
+                    nombre: "Recibido",
+                    optionSet: 'Estado de Recepción (Seguimiento Comprobantes)'.Recibido,
+                    valor: 100000000//
+                },
+                {
+                    nombre: "Observado",
+                    optionSet: 'Estado de Recepción (Seguimiento Comprobantes)'.Observado,
+                    valor: 100000001//'Estado de Recepción (Seguimiento Comprobantes)'.Observado//
+                },
+                {
+                    nombre: "Rechazado",
+                    optionSet: 'Estado de Recepción (Seguimiento Comprobantes)'.Rechazado,
+                    valor: 100000002//'Estado de Recepción (Seguimiento Comprobantes)'.Rechazado//
+                }
+            ));
+        
+        SaveData(tipoContactoOpcionesCollect , "tipoContactoOpcionesData" );
+        SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
+         
+        
+        //ONLINE
+        If(
+            Connection.Connected,
+            //Limpieza
+            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);
+            ClearData("contactosClientesData"); 
+            ClearData("contactosTransportesData" );
+            ClearData("seguimientoFacturasData")
+        );
+        
+        
+        If(
+            Connection.Connected,
+            //consulto de dataverse
+            Concurrent(
+                Collect(contactosClientesCollect,
+                    SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
+                    
+                ),
+                Collect(contactosTransportesCollect,
+                SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"  &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
+                    
+                ),
+                
+                Collect(seguimientoFacturasCollect,
+                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo" ),"modifiedon", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                )
+            );
+         
+            ClearData("contactosClientesData"); 
+            ClearData( "contactosTransportesData" );
+            ClearData("seguimientoFacturasData");
+        
+            //guardo en memoria
+            SaveData(contactosClientesCollect, "contactosClientesData");
+            SaveData(contactosTransportesCollect, "contactosTransportesData");
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
+        );
+        
+        
+        
+        If(
+            !Connection.Connected,    
+        
+            //cargo de las colecciones en  memoria
+            LoadData(contactosClientesCollect, "contactosClientesData");
+            LoadData(contactosTransportesCollect, "contactosTransportesData");
+            LoadData(seguimientoFacturasCollect, "seguimientoFacturasData");
+        
+            //no haria falta en el offline
+           // LoadData(tipoContactoOpcionesCollect; "tipoContactoOpcionesData");;
+           // LoadData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData")
+        
+        )
+        
+
