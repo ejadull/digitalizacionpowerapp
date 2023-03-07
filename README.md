@@ -1,0 +1,2 @@
+# digitalizacionpowerapp
+digitalizacionpowerapp movil desconectada
