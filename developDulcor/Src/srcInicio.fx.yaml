@@ -14,7 +14,7 @@ srcInicio As screen:
                 seguimientoFacturasCollect,
                 txtBusqueda.Text in 'Numero de Comprobante',
                 estado_recepcion in Text('Estado de Recepción')
-                ,//Lower(User().Email) in Lower(emailaddress)//DEMO solo registros del usuario actual, el filtro se aplicaria en OnStart, cuando inicia la aplicacion
+                //;Lower(User().Email) in Lower(emailaddress)//DEMO solo registros del usuario actual, el filtro se aplicaria en OnStart, cuando inicia la aplicacion
             )
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Controls
