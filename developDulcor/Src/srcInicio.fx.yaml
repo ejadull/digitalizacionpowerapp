@@ -12,13 +12,15 @@ srcInicio As screen:
         Items: |-
             =//If(
                 //Len(txtBusqueda.Text) > 0;
-                Filter(
-                    seguimientoFacturasCollect,
-                    txtBusqueda.Text in 'Numero de Comprobante',
-                    estado_recepcion in   Text('Estado de Recepción')
-                    //pss_razonsocial in   Text(filterTransportista.Selected.'Razon Social')
-                )
-                /*;
+                //SortByColumns(
+                    Filter(
+                        seguimientoFacturasCollect,
+                        txtBusqueda.Text in 'Numero de Comprobante',
+                        estado_recepcion in   Text('Estado de Recepción')
+                        //pss_razonsocial in   Text(filterTransportista.Selected.'Razon Social')
+                    )//; "pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending; "createdon";SortOrder.Descending)
+                
+                /*
                 Filter(
                     seguimientoFacturasCollect;
                     txtBusqueda.Text in 'Numero de Comprobante';
@@ -84,9 +86,9 @@ srcInicio As screen:
             Size: =10
             Text: |
                 =//"Estado de Recepción: " & ThisItem.'Estado de Recepción' & 
-                "Cliente: " & ThisItem.Cliente.'Nombre Full Contacto' & " 
+                "Cliente: " & Upper(ThisItem.Cliente.'Nombre Full Contacto') & " 
                 Transportista: " & ThisItem.Transportista.'Nombre Full Contacto'  & " 
-                Destino: " & Upper(ThisItem.Destino.Name)
+                Destino: " & Upper(ThisItem.Destino.Name) & "    Fecha : " & Text(ThisItem.pss_fechacomprobante,DateTimeFormat.ShortDate,"es-ES")
             Width: =529
             X: =45
             Y: =33

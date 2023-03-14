@@ -253,6 +253,7 @@
       "pss_cuit": "Cuit",
       "pss_empresa": "Empresa",
       "pss_idclienteorigen": "IdClienteOrigen",
+      "pss_idinternobase64": "IdInternoBase64",
       "pss_idtrasporte": "IdTrasporte",
       "pss_nombrefullcontacto": "Nombre Full Contacto",
       "pss_pss_seguimientocomprobantes_Cliente_conta": "Seguimiento Comprobantes (pss_pss_seguimientocomprobantes_Cliente_conta)",
@@ -315,13 +316,13 @@
       "3a282da1-5d90-e011-95ae-00155d9cfa03": "Contactos en seguimiento",
       "69103b65-f27e-45ce-a69c-eb1a7c805a45": "Campañas de contactos excluidos",
       "73bc2d9b-4e0e-424c-8839-ed59d6817e3a": "Vista de subcuadrícula de contactos activos",
-      "76f71276-9971-ed11-81ac-000d3a8868e2": "ContactosTipoTransporteActivos",
+      "76f71276-9971-ed11-81ac-000d3a8868e2": "Transportista",
       "927e6cd8-b3ed-4c20-a154-b8bd8a86d172": "Contactos: ninguna actividad de campaña en los 3 últimos meses",
       "9c241a33-ca0b-4e50-ae92-db780d5b2a12": "Contactos: han respondido a las campañas en los 6 últimos meses",
       "a2d479c5-53e3-4c69-addd-802327e67a0d": "Vista de búsqueda de contactos",
       "ab582fb0-a846-453e-ad88-77f75ce91264": "Mis conexiones",
       "eda26f1e-dbcc-40ad-91f2-ff2878d1d8d8": "Contactos del derecho",
-      "f053004d-9971-ed11-81ac-000d3a8868e2": "ContactosTipoClienteActivos"
+      "f053004d-9971-ed11-81ac-000d3a8868e2": "Clientes"
     }
   },
   {
