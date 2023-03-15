@@ -40,6 +40,7 @@
       "pss_numerodecomprobante": "Numero de Comprobante",
       "pss_numerodeseguimiento": "Numero de Seguimiento",
       "pss_observaciones": "Observaciones",
+      "pss_ordenestado": "OrdenEstado",
       "pss_seguimientocomprobantes_Annotations": "Notas",
       "pss_seguimientocomprobantes_AsyncOperations": "Trabajos del sistema",
       "pss_seguimientocomprobantes_BulkDeleteFailures": "Errores de eliminación en masa",
