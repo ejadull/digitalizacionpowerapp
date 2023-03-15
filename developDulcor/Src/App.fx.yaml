@@ -71,9 +71,9 @@ App As appinfo:
                     AddColumns(SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo"; Lower(emailaddress) exactin Lower(User().Email) );"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending; "createdon";SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
                 )
                 */
-        
+        //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
                 Collect(seguimientoFacturasCollect,
-                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo"),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending, "createdon",SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo"),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
                 )
             );
          
