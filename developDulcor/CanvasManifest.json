@@ -24,7 +24,7 @@
       "datatablev2control": true,
       "dataverseactionsenabled": false,
       "delaycontrolrendering": true,
-      "delayloadscreens": true,
+      "delayloadscreens": false,
       "disablecdsfileandlargeimage": false,
       "dynamicschema": false,
       "enableappembeddingux": true,

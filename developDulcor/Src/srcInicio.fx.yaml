@@ -201,6 +201,7 @@ srcInicio As screen:
         OnChange: |-
             =UpdateContext(
                 {
+                    barcodeFront :txtBusqueda.Text,
                     seguimientoList: SortByColumns(
                         Filter(
                             seguimientoFacturasCollect,
@@ -520,12 +521,12 @@ srcInicio As screen:
         OnSelect: |-
             =UpdateContext(
                 {
-                    barcodeFront : "",
+                    barcodeFront : Blank(),
                     estado_recepcion: "",
                     seguimientoList: SortByColumns(
                         Filter(
                             seguimientoFacturasCollect,
-                            txtBusqueda.Text in 'Numero de Comprobante',
+                            //txtBusqueda.Text in 'Numero de Comprobante';
                             OrdenEstado = 0,
                             //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                             //Lower(Transportista.'Correo electrónico')=User().Email
