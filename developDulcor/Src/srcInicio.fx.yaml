@@ -8,14 +8,17 @@ srcInicio As screen:
             {
                 estado_recepcion: "",
                 seguimientoList: SortByColumns(
+                    seguimientoFacturasCollect,
+                    /*
                     Filter(
-                        seguimientoFacturasCollect,
-                        txtBusqueda.Text in 'Numero de Comprobante',
-                        OrdenEstado = 0,
+                        seguimientoFacturasCollect;
+                        txtBusqueda.Text in 'Numero de Comprobante';
+                        //OrdenEstado = 0;
                         //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                         //Lower(Transportista.'Correo electrónico')=User().Email
                        Lower(User().Email) in Lower(Transportista.'Correo electrónico')
-                    ),
+                    );
+                    */
                     "pss_ordenestado",
                     SortOrder.Ascending
                 )
@@ -202,8 +205,8 @@ srcInicio As screen:
                         Filter(
                             seguimientoFacturasCollect,
                             txtBusqueda.Text in 'Numero de Comprobante',
-                            estado_recepcion in Text('Estado de Recepción'),
-                            Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
+                            estado_recepcion in Text('Estado de Recepción')//;
+                            //Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                         ),
                         "pss_ordenestado",
                         SortOrder.Ascending
