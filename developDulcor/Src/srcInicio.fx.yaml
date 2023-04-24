@@ -11,7 +11,9 @@ srcInicio As screen:
                     Filter(
                         seguimientoFacturasCollect,
                         txtBusqueda.Text in 'Numero de Comprobante',
-                        OrdenEstado = 0
+                        OrdenEstado = 0,
+                        Transportista.IdTrasporte=_transportistaActual.IdTrasporte,
+                        Transportista.'Correo electrónico'=User().Email
                         //;Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                     ),
                     "pss_ordenestado",
@@ -500,11 +502,13 @@ srcInicio As screen:
                 {
                     estado_recepcion: "",
                     seguimientoList: SortByColumns(
-                        Filter(
+                         Filter(
                             seguimientoFacturasCollect,
                             txtBusqueda.Text in 'Numero de Comprobante',
-                            OrdenEstado = 0//;
-                            //Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
+                            OrdenEstado = 0,
+                            Transportista.IdTrasporte=_transportistaActual.IdTrasporte,
+                            Transportista.'Correo electrónico'=User().Email
+                            //;Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                         ),
                         "pss_ordenestado",
                         SortOrder.Ascending
@@ -542,85 +546,4 @@ srcInicio As screen:
         X: =113
         Y: =130
         ZIndex: =17
-
-    Rectangle5 As rectangle:
-        BorderColor: =RGBA(32, 54, 71, 1)
-        Fill: =RGBA(255, 255, 255, 1)
-        Height: =836
-        Width: =575
-        X: =40
-        Y: =40
-        ZIndex: =18
-
-    "Gallery2 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
-        BorderColor: =RGBA(32, 54, 71, 1)
-        DelayItemLoading: =true
-        Items: =variablesEntornoCollect
-        Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Data
-        TemplatePadding: =0
-        TemplateSize: =Min(96, Self.Height - 60)
-        Width: =577
-        X: =62
-        Y: =80
-        ZIndex: =19
-
-        Title5 As label:
-            Color: =RGBA(32, 54, 71, 1)
-            DisabledColor: =RGBA(166, 166, 166, 1)
-            FontWeight: =FontWeight.Semibold
-            Height: =Self.Size * 1.8
-            OnSelect: =Select(Parent)
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingRight: =0
-            PaddingTop: =0
-            Size: =20
-            Text: =ThisItem.transportistaActual.'Correo electrónico'
-            VerticalAlign: =VerticalAlign.Top
-            Width: =Parent.TemplateWidth - 104
-            X: =32
-            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-            ZIndex: =1
-
-        NextArrow5 As icon.ChevronRight:
-            AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =RGBA(32, 54, 71, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            DisabledColor: =RGBA(244, 244, 244, 1)
-            Height: =60
-            Icon: =Icon.ChevronRight
-            OnSelect: =Select(Parent)
-            PaddingBottom: =10
-            PaddingLeft: =10
-            PaddingRight: =10
-            PaddingTop: =10
-            TabIndex: =0
-            Tooltip: ="Ver los detalles del elemento"
-            Width: =60
-            X: =Parent.TemplateWidth - Self.Width - 5
-            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-            ZIndex: =2
-
-        Separator5 As rectangle:
-            BorderColor: =RGBA(32, 54, 71, 1)
-            Fill: =RGBA(32, 54, 71, 1)
-            Height: =1
-            OnSelect: =Select(Parent)
-            Width: =Parent.TemplateWidth
-            Y: =Parent.TemplateHeight - 1
-            ZIndex: =3
-
-    Label8 As label:
-        BorderColor: =RGBA(32, 54, 71, 1)
-        Color: =RGBA(0, 0, 0, 1)
-        DisabledColor: =RGBA(166, 166, 166, 1)
-        Height: =70
-        Size: =21
-        Text: =_transportistaActual.'Correo electrónico' 
-        Width: =560
-        X: =45
-        Y: =644
-        ZIndex: =20
 
