@@ -60,7 +60,7 @@ App As appinfo:
                         Filter(Contactos, 
                             statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
                             &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
-                            && Lower(emailaddress1) exactin Lower(User().Email)
+                            && Lower(emailaddress1) exactin "pedro.hildmann@dulcor.com.ar" //Lower(User().Email)
                         )
                     )
                 );
