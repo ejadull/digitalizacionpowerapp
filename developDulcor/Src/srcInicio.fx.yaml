@@ -612,3 +612,15 @@ srcInicio As screen:
             Y: =Parent.TemplateHeight - 1
             ZIndex: =3
 
+    Label8 As label:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =70
+        Size: =21
+        Text: =_transportistaActual.'Correo electrónico' 
+        Width: =560
+        X: =45
+        Y: =644
+        ZIndex: =20
+

@@ -7,7 +7,7 @@ App As appinfo:
         If(
             Connection.Connected,
             //Limpieza
-            Clear(tipoContactoOpcionesCollect);Clear(estadoRecepcionOpcionesCollect) 
+            Clear(tipoContactoOpcionesCollect);Clear(estadoRecepcionOpcionesCollect);Clear(variablesEntornoCollect) 
         );
         
         Collect(tipoContactoOpcionesCollect,  Table(
