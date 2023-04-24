@@ -4,6 +4,12 @@ App As appinfo:
         =//declaracion de variables GLOBALES, colecciones y VARS
         
         //SIEMPRE
+        If(
+            Connection.Connected,
+            //Limpieza
+            Clear(tipoContactoOpcionesCollect);Clear(estadoRecepcionOpcionesCollect) 
+        );
+        
         Collect(tipoContactoOpcionesCollect,  Table(
                 {
                     nombre: "Cliente",
