@@ -24,7 +24,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 1873,
+                  "charOffset": 1993,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -64,7 +64,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 1891,
+                  "charOffset": 2011,
                   "snippet": {
                     "text": "&&"
                   }
@@ -104,7 +104,87 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2052,
+                  "charOffset": 2094,
+                  "snippet": {
+                    "text": "&&"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnStart",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "Filter"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 0
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.OnStart"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.OnStart",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 2124,
+                  "snippet": {
+                    "text": "&&"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnStart",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "Filter"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 0
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.OnStart"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.OnStart",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 2175,
                   "snippet": {
                     "text": "&&"
                   }
@@ -144,7 +224,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2304,
+                  "charOffset": 2423,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -184,7 +264,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2322,
+                  "charOffset": 2441,
                   "snippet": {
                     "text": "&&"
                   }
@@ -224,7 +304,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2375,
+                  "charOffset": 2494,
                   "snippet": {
                     "text": "&&"
                   }
@@ -264,7 +344,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2398,
+                  "charOffset": 2517,
                   "snippet": {
                     "text": "&&"
                   }
@@ -304,7 +384,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2589,
+                  "charOffset": 2708,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -344,7 +424,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2607,
+                  "charOffset": 2726,
                   "snippet": {
                     "text": "&&"
                   }
@@ -384,7 +464,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2663,
+                  "charOffset": 2782,
                   "snippet": {
                     "text": "&&"
                   }
@@ -424,7 +504,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2693,
+                  "charOffset": 2812,
                   "snippet": {
                     "text": "&&"
                   }
@@ -464,7 +544,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 3501,
+                  "charOffset": 5224,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -4095,36 +4175,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App._transportistaActual"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App._transportistaActual",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "_transportistaActual",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.9035834_barcode_sharp_icon (1)"
                 }
               ],
@@ -4148,7 +4198,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedMediaResources",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -4178,7 +4228,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedMediaResources",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -4208,7 +4258,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedMediaResources",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -4238,7 +4288,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedMediaResources",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -4268,7 +4318,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedMediaResources",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -4297,7 +4347,7 @@
             "level": "Medium"
           },
           "ruleId": "app-DataSourceDefaultMaxRowsLimit",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -4327,7 +4377,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         },
         {
           "locations": [
@@ -4357,7 +4407,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         },
         {
           "locations": [
@@ -4387,7 +4437,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         },
         {
           "locations": [
@@ -4417,7 +4467,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         },
         {
           "locations": [
@@ -4447,7 +4497,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         },
         {
           "locations": [
@@ -4477,7 +4527,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 9
         }
       ],
       "tool": {
@@ -4601,23 +4651,6 @@
               }
             },
             {
-              "id": "app-UnusedVariables",
-              "messageStrings": {
-                "issue": {
-                  "text": "Variable no utilizada"
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "howToFix": [
-                  "Quite la variable no utilizada."
-                ],
-                "level": "Medium",
-                "primaryCategory": "performance",
-                "whyFix": "Esta variable está declarada, pero ningún control hace referencia a ella, por lo que no es necesaria."
-              }
-            },
-            {
               "id": "app-UnusedMediaResources",
               "messageStrings": {
                 "issue": {
@@ -4649,6 +4682,23 @@
                 "level": "Medium",
                 "primaryCategory": "performance",
                 "whyFix": "Un límite de filas de datos superior a 500 puede dar lugar a una aplicación más lenta al ejecutar consultas que no son delegables, ya que la aplicación tendrá que procesar todas las filas, en lugar de ejecutar la consulta en el servidor."
+              }
+            },
+            {
+              "id": "app-UnusedVariables",
+              "messageStrings": {
+                "issue": {
+                  "text": "Variable no utilizada"
+                }
+              },
+              "properties": {
+                "componentType": "app",
+                "howToFix": [
+                  "Quite la variable no utilizada."
+                ],
+                "level": "Medium",
+                "primaryCategory": "performance",
+                "whyFix": "Esta variable está declarada, pero ningún control hace referencia a ella, por lo que no es necesaria."
               }
             }
           ],

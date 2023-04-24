@@ -372,7 +372,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "04/24/2023 15:55:38",
+  "HeaderLastSavedDateTimeUTC": "04/24/2023 19:22:11",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
@@ -930,7 +930,7 @@
     "Body1_2": 326,
     "Body2": 227,
     "btnNoOnline_1": 321,
-    "btnSync": 310,
+    "btnSync": 311,
     "camcam": 219,
     "Canvas2": 212,
     "cbmEstado_2": 160,
@@ -1087,7 +1087,7 @@
     "Icon2": 216,
     "Icon3": 215,
     "Icon4": 1,
-    "Icon5": 311,
+    "Icon5": 312,
     "Icon6": 315,
     "Icon7": 335,
     "Icon7_1": 201,
@@ -1110,7 +1110,7 @@
     "iconRecargar": 7,
     "Image1": 339,
     "Image1_1": 342,
-    "Image2": 312,
+    "Image2": 313,
     "Image3": 8,
     "Image4": 33,
     "Image4_1": 193,
@@ -1151,7 +1151,7 @@
     "LblSuccessMsg1": 211,
     "ListadoSeguimiento": 21,
     "ListadoSeguimiento_2": 323,
-    "ModalRefresh": 313,
+    "ModalRefresh": 310,
     "ModalRefresh_1": 134,
     "Name_DataCard1": 69,
     "Name_DataCard1_1": 167,
@@ -1314,7 +1314,7 @@
       "typedDataCard": 38
     },
     "DeserializationLoadTime": 10.5310098,
-    "ErrorCount": 33
+    "ErrorCount": 35
   },
   "WasLocalDatabaseReferencesEmpty": false
 }

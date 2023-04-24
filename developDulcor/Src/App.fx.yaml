@@ -37,19 +37,21 @@ App As appinfo:
                 }
             ));
         
+        Collect(variablesEntornoCollect, Table());
         SaveData(tipoContactoOpcionesCollect , "tipoContactoOpcionesData" );
         SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
+        SaveData(variablesEntornoCollect, "variablesEntornoData" );
          
         
         //ONLINE
         If(
             Connection.Connected,
             //Limpieza
-            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);Clear(variablesEntornoCollect);
+            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);//Clear(variablesEntornoCollect);;
             ClearData("contactosClientesData"); 
             ClearData("contactosTransportesData" );
             ClearData("seguimientoFacturasData");
-            ClearData("variablesEntornoData")
+            //ClearData("variablesEntornoData")
         );
         
         
@@ -57,20 +59,17 @@ App As appinfo:
             Connection.Connected,
             //consulto de dataverse
             
-        
-            
             Concurrent(
                 Collect(variablesEntornoCollect, Table(
-                {
-                   transportistaActual: First(
-                        Filter(Contactos, 
-                            statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
-                            //&&  !IsBlank(pss_razonsocial) // && pss_razonsocial <> "" 
-                            && Lower(emailaddress1) exactin "pedro.hildmann@dulcor.com.ar" //Lower(User().Email)
+                    {
+                        transportistaActual: First(
+                            Filter(Contactos, 
+                                statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
+                                &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
+                                && Lower(emailaddress1) = "pedro.hildmann@dulcor.com.ar" //Lower(User().Email)
+                            )
                         )
-                    )
-                
-                }
+                    }
                 ));
                 Collect(contactosClientesCollect,
                     SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
@@ -79,7 +78,7 @@ App As appinfo:
                 Collect(contactosTransportesCollect,
                 SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"  &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
                     
-                ),
+                )
                  
                 //QUERY OK   pedro.hildmann@dulcor.com.ar
                 /*
@@ -90,23 +89,23 @@ App As appinfo:
                 */
                 
         //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
-                
-                Collect(seguimientoFacturasCollect,
-                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo"),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                /*
+                Collect(seguimientoFacturasCollect;
+                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo");"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
                 )
-                
+                */
                 
             );
          
             ClearData("contactosClientesData"); 
             ClearData( "contactosTransportesData" );
-            ClearData("seguimientoFacturasData");
+            //ClearData("seguimientoFacturasData");;
             ClearData("transportistaActualTable");
         
             //guardo en memoria
             SaveData(contactosClientesCollect, "contactosClientesData");
             SaveData(contactosTransportesCollect, "contactosTransportesData");
-            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" );
+           //SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" );;
             SaveData(variablesEntornoCollect, "variablesEntornoData" )
         );
         
@@ -118,7 +117,7 @@ App As appinfo:
             //cargo de las colecciones en  memoria
             LoadData(contactosClientesCollect, "contactosClientesData");
             LoadData(contactosTransportesCollect, "contactosTransportesData");
-            LoadData(seguimientoFacturasCollect, "seguimientoFacturasData");
+           // LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
             LoadData(variablesEntornoCollect, "variablesEntornoData");
         
             //no haria falta en el offline
@@ -127,5 +126,20 @@ App As appinfo:
         
         );
         
-        Set(_transportistaActual, First(variablesEntornoCollect).transportistaActual)
+        Set(_transportistaActual, First(variablesEntornoCollect).transportistaActual);
+        
+        //cargo datos de seguimiento luego de establecer el transportista
+        If(
+            Connection.Connected,
+            //consulto de dataverse
+            Collect(seguimientoFacturasCollect,
+                    AddColumns(SortByColumns(
+                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Transportista.IdInternoBase64 exactin _transportistaActual.IdInternoBase64), //pss_transportista
+                        "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                );
+            ClearData("seguimientoFacturasData");
+        
+            //guardo en memoria 
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" ) 
+        )
 

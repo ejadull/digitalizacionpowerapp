@@ -11,8 +11,8 @@ srcInicio As screen:
                     Filter(
                         seguimientoFacturasCollect,
                         txtBusqueda.Text in 'Numero de Comprobante',
-                        OrdenEstado = 0,
-                        Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
+                        OrdenEstado = 0
+                        //;Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                     ),
                     "pss_ordenestado",
                     SortOrder.Ascending
@@ -503,8 +503,8 @@ srcInicio As screen:
                         Filter(
                             seguimientoFacturasCollect,
                             txtBusqueda.Text in 'Numero de Comprobante',
-                            OrdenEstado = 0,
-                            Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
+                            OrdenEstado = 0//;
+                            //Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                         ),
                         "pss_ordenestado",
                         SortOrder.Ascending
