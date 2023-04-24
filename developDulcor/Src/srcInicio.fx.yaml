@@ -520,6 +520,7 @@ srcInicio As screen:
         OnSelect: |-
             =UpdateContext(
                 {
+                    barcodeFront : "",
                     estado_recepcion: "",
                     seguimientoList: SortByColumns(
                         Filter(
