@@ -39,7 +39,8 @@ srcInicio As screen:
             
             // pss_estadoderecepcion pss_ordenestado
         Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Controls
+        LoadingSpinner: =LoadingSpinner.Data
+        LoadingSpinnerColor: =Color.Black
         TemplatePadding: =0
         TemplateSize: =101
         Y: =223

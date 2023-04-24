@@ -4190,7 +4190,14 @@
           "IsLockable": false,
           "NameMapSourceSchema": "?"
         },
-        "LoadingSpinnerColor",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "Self.BorderColor",
+          "InvariantPropertyName": "LoadingSpinnerColor",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "DisplayMode",
         "BorderColor",
         "DisabledBorderColor",
