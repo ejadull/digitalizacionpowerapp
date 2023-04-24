@@ -96,8 +96,9 @@ srcInicio As screen:
             Text: |
                 =//"Estado de Recepción: " & ThisItem.'Estado de Recepción' & 
                 "Cliente: " & Upper(ThisItem.Cliente.'Nombre Full Contacto') & " 
-                Transportista: " & ThisItem.Transportista.'Nombre Full Contacto' & "-" & ThisItem.Transportista.'Correo electrónico' & " 
+                Transportista: " & ThisItem.Transportista.'Nombre Full Contacto' & " 
                 Destino: " & Upper(ThisItem.Destino.Name) & "    Fecha : " & Text(ThisItem.pss_fechacomprobante,DateTimeFormat.ShortDate,"es-ES")
+                //  & "-" & ThisItem.Transportista.'Correo electrónico'
             Width: =529
             X: =45
             Y: =33
@@ -547,4 +548,17 @@ srcInicio As screen:
         X: =113
         Y: =130
         ZIndex: =17
+
+    Label8 As label:
+        Align: =Align.Right
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(179, 179, 179, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =13
+        Size: =8
+        Text: =CountRows(seguimientoList) & " items"
+        Width: =116
+        X: =499
+        Y: =212
+        ZIndex: =18
 

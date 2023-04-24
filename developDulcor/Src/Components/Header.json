@@ -51,7 +51,7 @@
         "Name": "Rectangle1",
         "Parent": "Header",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 337,
+        "PublishOrderIndex": 338,
         "Rules": [
           {
             "Category": "Design",
@@ -259,7 +259,7 @@
         "Name": "txtTitulo",
         "Parent": "Header",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 338,
+        "PublishOrderIndex": 339,
         "Rules": [
           {
             "Category": "Data",
@@ -567,7 +567,7 @@
         "Name": "Image1",
         "Parent": "Header",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 339,
+        "PublishOrderIndex": 340,
         "Rules": [
           {
             "Category": "Data",
