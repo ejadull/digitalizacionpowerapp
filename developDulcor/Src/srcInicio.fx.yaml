@@ -302,7 +302,21 @@ srcInicio As screen:
         OnCancel: |-
             =UpdateContext({ barcodeFront : ""});
         OnScan: |-
-            =UpdateContext({ barcodeFront : BarcodeScanner2.Value})
+            =UpdateContext({ barcodeFront : BarcodeScanner2.Value});
+            UpdateContext(
+                {
+                    seguimientoList: SortByColumns(
+                        Filter(
+                            seguimientoFacturasCollect,
+                            txtBusqueda.Text in 'Numero de Comprobante',
+                            estado_recepcion in Text('Estado de Recepción')//;
+                            //Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
+                        ),
+                        "pss_ordenestado",
+                        SortOrder.Ascending
+                    )
+                }
+            )
         Size: =24
         Text: =""
         Width: =66
