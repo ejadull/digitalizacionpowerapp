@@ -55,6 +55,15 @@ App As appinfo:
         If(
             Connection.Connected,
             //consulto de dataverse
+            Set( 
+                _transportistaActual, First(
+                        Filter(Contactos, 
+                            statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
+                            &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
+                            && Lower(emailaddress1) exactin Lower(User().Email)
+                        )
+                    )
+                );
             Concurrent(
                 Collect(contactosClientesCollect,
                     SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
@@ -65,9 +74,10 @@ App As appinfo:
                     
                 ),
                  
-                //QUERY OK
+                //QUERY OK   pedro.hildmann@dulcor.com.ar
                 Collect(seguimientoFacturasCollect,
-                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(emailaddress) exactin Lower(User().Email) ),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending, "createdon",SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                    AddColumns(
+                        SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(emailaddress) exactin Lower(User().Email), pss_transportista exactin Transportista.idco ),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending, "createdon",SortOrder.Descending), "IdLocal", GUID(), "Online", true)
                 )
                 
         //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
