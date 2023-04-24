@@ -372,7 +372,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "04/24/2023 15:09:43",
+  "HeaderLastSavedDateTimeUTC": "04/24/2023 15:55:38",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
@@ -504,7 +504,8 @@
     "Usuarios\\systemuser_preferredaddresscode": 62,
     "Usuarios\\systemuser_preferredemailcode": 63,
     "Usuarios\\systemuser_preferredphonecode": 69,
-    "Usuarios\\systemuser_setupuser": 46
+    "Usuarios\\systemuser_setupuser": 46,
+    "variablesEntornoCollect": 95
   },
   "OrderGroupControls": {
     "GroupNew": {
@@ -1313,7 +1314,7 @@
       "typedDataCard": 38
     },
     "DeserializationLoadTime": 10.5310098,
-    "ErrorCount": 37
+    "ErrorCount": 33
   },
   "WasLocalDatabaseReferencesEmpty": false
 }

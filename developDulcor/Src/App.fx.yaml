@@ -1,6 +1,6 @@
 App As appinfo:
     BackEnabled: =false
-    OnStart: |+
+    OnStart: |-
         =//declaracion de variables GLOBALES, colecciones y VARS
         
         //SIEMPRE
@@ -45,26 +45,33 @@ App As appinfo:
         If(
             Connection.Connected,
             //Limpieza
-            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);
+            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);Clear(variablesEntornoCollect);
             ClearData("contactosClientesData"); 
             ClearData("contactosTransportesData" );
-            ClearData("seguimientoFacturasData")
+            ClearData("seguimientoFacturasData");
+            ClearData("variablesEntornoData")
         );
         
         
         If(
             Connection.Connected,
             //consulto de dataverse
-            Set( 
-                _transportistaActual, First(
+            
+        
+            
+            Concurrent(
+                Collect(variablesEntornoCollect, Table(
+                {
+                   transportistaActual: First(
                         Filter(Contactos, 
                             statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
-                            &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
+                            //&&  !IsBlank(pss_razonsocial) // && pss_razonsocial <> "" 
                             && Lower(emailaddress1) exactin "pedro.hildmann@dulcor.com.ar" //Lower(User().Email)
                         )
                     )
-                );
-            Concurrent(
+                
+                }
+                ));
                 Collect(contactosClientesCollect,
                     SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
                     
@@ -75,27 +82,32 @@ App As appinfo:
                 ),
                  
                 //QUERY OK   pedro.hildmann@dulcor.com.ar
-                Collect(seguimientoFacturasCollect,
-                    AddColumns(
-                        SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(emailaddress) exactin Lower(User().Email), pss_transportista exactin Transportista.idco ),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending, "createdon",SortOrder.Descending), "IdLocal", GUID(), "Online", true)
-                )
-                
-        //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
                 /*
                 Collect(seguimientoFacturasCollect;
-                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo");"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
+                    AddColumns(
+                        SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo"; Lower(emailaddress) exactin Lower(User().Email) );"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending; "createdon";SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
                 )
                 */
+                
+        //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
+                
+                Collect(seguimientoFacturasCollect,
+                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo"),"pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                )
+                
+                
             );
          
             ClearData("contactosClientesData"); 
             ClearData( "contactosTransportesData" );
             ClearData("seguimientoFacturasData");
+            ClearData("transportistaActualTable");
         
             //guardo en memoria
             SaveData(contactosClientesCollect, "contactosClientesData");
             SaveData(contactosTransportesCollect, "contactosTransportesData");
-            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" );
+            SaveData(variablesEntornoCollect, "variablesEntornoData" )
         );
         
         
@@ -107,11 +119,13 @@ App As appinfo:
             LoadData(contactosClientesCollect, "contactosClientesData");
             LoadData(contactosTransportesCollect, "contactosTransportesData");
             LoadData(seguimientoFacturasCollect, "seguimientoFacturasData");
+            LoadData(variablesEntornoCollect, "variablesEntornoData");
         
             //no haria falta en el offline
            // LoadData(tipoContactoOpcionesCollect; "tipoContactoOpcionesData");;
            // LoadData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData")
         
-        )
+        );
         
+        Set(_transportistaActual, First(variablesEntornoCollect).transportistaActual)
 
