@@ -786,7 +786,7 @@
       "colorHeader",
       "COLORheader1"
     ],
-    "LastModifiedTimestamp": "638144780533378487",
+    "LastModifiedTimestamp": "638179419737583180",
     "Name": "Header",
     "Rules": [
       {
@@ -877,7 +877,7 @@
       "Name": "mostrarIcono",
       "PropertyDataTypeKey": "Boolean",
       "Tooltip": "Propiedad personalizada",
-      "Type": "{\"Version\":\"1.330\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"_MinPrimitive\",\"EnumString\":\"\",\"Type\":[]}}"
+      "Type": "{\"Version\":\"1.330\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Boolean\",\"EnumString\":\"\",\"Type\":[]}}"
     },
     {
       "Category": 0,
@@ -906,7 +906,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638144780533378487",
+  "LastModifiedTimestamp": "638179419737583180",
   "Name": "2294ad5842944585981d943c661e6c05",
   "OverridableProperties": {},
   "Version": "638052605639019621"

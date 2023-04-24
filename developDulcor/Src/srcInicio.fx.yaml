@@ -11,7 +11,7 @@ srcInicio As screen:
                     Filter(
                         seguimientoFacturasCollect,
                         txtBusqueda.Text in 'Numero de Comprobante',
-                        pss_ordenestado = 0,
+                        OrdenEstado = 0,
                         Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                     ),
                     "pss_ordenestado",
@@ -503,7 +503,7 @@ srcInicio As screen:
                         Filter(
                             seguimientoFacturasCollect,
                             txtBusqueda.Text in 'Numero de Comprobante',
-                            pss_ordenestado = 0,
+                            OrdenEstado = 0,
                             Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
                         ),
                         "pss_ordenestado",
