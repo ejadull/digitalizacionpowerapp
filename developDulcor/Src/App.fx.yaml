@@ -72,7 +72,7 @@ App As appinfo:
                             Filter(Contactos, 
                                 statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
                                 &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
-                                && Lower(emailaddress1) = "pedro.hildmann@dulcor.com.ar" //Lower(User().Email)
+                                && Lower(emailaddress1) = Lower(User().Email)
                             )
                         )
                     }
@@ -140,7 +140,7 @@ App As appinfo:
             //consulto de dataverse
             Collect(seguimientoFacturasCollect,
                     AddColumns(SortByColumns(
-                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Transportista.IdInternoBase64 exactin _transportistaActual.IdInternoBase64), //pss_transportista
+                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(User().Email) in Lower(Transportista.'Correo electrónico')), //pss_transportista
                         "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
                 );
             ClearData("seguimientoFacturasData");
