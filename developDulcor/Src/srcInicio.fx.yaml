@@ -11,7 +11,7 @@ srcInicio As screen:
                     Filter(
                         seguimientoFacturasCollect,
                         txtBusqueda.Text in 'Numero de Comprobante',
-                        OrdenEstado = 0
+                        OrdenEstado = 0,
                         //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                         //Lower(Transportista.'Correo electrónico')=User().Email
                        Lower(User().Email) in Lower(Transportista.'Correo electrónico')
