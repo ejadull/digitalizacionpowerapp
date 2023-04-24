@@ -14,13 +14,13 @@ srcInicio As screen:
                         OrdenEstado = 0
                         //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                         //Lower(Transportista.'Correo electrónico')=User().Email
-                       // Lower(User().Email) in Lower(Transportista.'Correo electrónico')//DEMO 
+                       Lower(User().Email) in Lower(Transportista.'Correo electrónico')
                     ),
                     "pss_ordenestado",
                     SortOrder.Ascending
                 )
             }
-        )
+        ) 
 
     "ListadoSeguimiento As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
         BorderColor: =RGBA(32, 54, 71, 1)
@@ -96,7 +96,7 @@ srcInicio As screen:
             Text: |
                 =//"Estado de Recepción: " & ThisItem.'Estado de Recepción' & 
                 "Cliente: " & Upper(ThisItem.Cliente.'Nombre Full Contacto') & " 
-                Transportista: " & ThisItem.Transportista.'Nombre Full Contacto'  & " 
+                Transportista: " & ThisItem.Transportista.'Nombre Full Contacto' & "-" & ThisItem.Transportista.'Correo electrónico' & " 
                 Destino: " & Upper(ThisItem.Destino.Name) & "    Fecha : " & Text(ThisItem.pss_fechacomprobante,DateTimeFormat.ShortDate,"es-ES")
             Width: =529
             X: =45
@@ -434,7 +434,7 @@ srcInicio As screen:
                 "Rechazado", RGBA(255, 0, 0, 1))
             FontWeight: =FontWeight.Semibold
             HoverFill: =RGBA(204, 204, 204, 1)
-            OnSelect: |
+            OnSelect: |-
                 =UpdateContext(
                     {
                         //estado_recepcion: ThisItem.nombre;
@@ -442,22 +442,16 @@ srcInicio As screen:
                             Filter(
                                 seguimientoFacturasCollect,
                                 txtBusqueda.Text in 'Numero de Comprobante',
-                                ThisItem.nombre in Text('Estado de Recepción')
-                            ),
-                            /*
-                            Filter(
-                                seguimientoFacturasCollect;
-                                txtBusqueda.Text in 'Numero de Comprobante';
-                                ThisItem.nombre in Text('Estado de Recepción');
+                                ThisItem.nombre in Text('Estado de Recepción'),
                                 //estado_recepcion = Text('Estado de Recepción');
-                                Lower(User().Email) in Lower('Dirección de correo electrónico')//DEMO 
-                            );
-                            */
+                                Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                            ),
+                            
                             "pss_ordenestado",
                             SortOrder.Ascending
                         )
                     }
-                );
+                ); 
             PaddingLeft: =0
             PaddingRight: =0
             PaddingTop: =0
@@ -512,10 +506,10 @@ srcInicio As screen:
                         Filter(
                             seguimientoFacturasCollect,
                             txtBusqueda.Text in 'Numero de Comprobante',
-                            OrdenEstado = 0
+                            OrdenEstado = 0,
                             //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                             //Lower(Transportista.'Correo electrónico')=User().Email
-                           // Lower(User().Email) in Lower(Transportista.'Correo electrónico')//DEMO 
+                            Lower(User().Email) in Lower(Transportista.'Correo electrónico')//DEMO 
                         ),
                         "pss_ordenestado",
                         SortOrder.Ascending
