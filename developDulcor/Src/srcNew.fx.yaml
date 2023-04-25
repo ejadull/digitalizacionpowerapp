@@ -61,7 +61,7 @@
                 Name:txtName_2.Text,
                 IdLocal: GUID(),
                 Online: false,
-                'Estado de Recepción': cbmEstadoRecepcion2.Selected.valor
+                'Estado de Recepción': cbmEstadoRecepcion2.Selected.optionSet
                 
             });
             Clear(MyPixs);ResetForm(frmAlta_1);Navigate(srcInicio,ScreenTransition.Cover)
