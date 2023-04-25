@@ -365,7 +365,7 @@ srcInicio As screen:
         Y: =5
         ZIndex: =12
 
-    Label9 As label:
+    lblConexion As label:
         Align: =Align.Right
         AutoHeight: =true
         BorderColor: =RGBA(32, 54, 71, 1)
@@ -380,7 +380,7 @@ srcInicio As screen:
         Y: =60
         ZIndex: =13
 
-    Label9_1 As label:
+    lblUsuario As label:
         AutoHeight: =true
         BorderColor: =RGBA(32, 54, 71, 1)
         Color: =RGBA(0, 0, 0, 1)

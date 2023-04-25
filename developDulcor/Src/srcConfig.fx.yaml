@@ -133,6 +133,7 @@
         DisabledBorderColor: =RGBA(166, 166, 166, 1)
         DisabledColor: =RGBA(166, 166, 166, 1)
         DisabledFill: =RGBA(244, 244, 244, 1)
+        DisplayMode: =If(Connection.Connected,DisplayMode.Edit,Disabled)
         Fill: =RGBA(0, 0, 0, 0)
         FontWeight: =FontWeight.Semibold
         Height: =50

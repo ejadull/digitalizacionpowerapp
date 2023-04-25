@@ -6,8 +6,8 @@ App As appinfo:
         //ONLINE
         If(
             Connection.Connected,
-            Set(locMensaje, "Cargado datos desde Dynamics"),
-            Set(locMensaje, "Cargado datos desde su Dispositivo")
+            Set(locMensaje, "Cargando datos de la aplicación"),
+            Set(locMensaje, "Cargando datos desde su Dispositivo")
         );
         
         If(
