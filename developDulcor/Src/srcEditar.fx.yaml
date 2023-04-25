@@ -1272,6 +1272,10 @@
                         //'Foto Adjunta 4': foto3;// de momento no usar
                     }
                 );
+                SaveData(//guardo en memoria
+                    seguimientoFacturasCollect,
+                    "seguimientoFacturasData"
+                );
                 Clear(MyPixs);
                 ResetForm(frmAlta_1);
                 UpdateContext({mostrarModalRefreshEdit: false});

@@ -313,36 +313,11 @@
         BorderColor: =RGBA(32, 54, 71, 1)
         Height: =955
         Items: |-
-            =        Filter(//por estado
-                        cloneData,
-                        Text(estado_recepcion1) in Text('Estado de Recepción')
-                        //Online = false // solo los modificados
-                    )
-                    //;
-              /* Filter(//por estado
-                        cloneData;
-                        //pss_estadoderecepcion exactin Text(galConfigEstados.Selected.valor) && 
-                        Online = !(soloSinGuardar)
-            
-                    )
-                    */
-            //If(
-              /*  !(soloSinGuardar);
-                Filter(//solo offline
-                    cloneData;
-                    Online = !(soloSinGuardar)
-                );*/
-                //If(
-                    //!IsBlankOrError(estado_recepcion);
-                    //Filter(//por estado
-                    //    cloneData;
-                    //   Text(estado_recepcion1) in Text('Estado de Recepción');
-                    //    Online = If(soloSinGuardar;false;true)
-                    //);
-                    //cloneData
-                //)
-            //)
-             
+            =Filter(//por estado
+                cloneData,
+                Text(estado_recepcion1) in Text('Estado de Recepción')
+                //Online = false // solo los modificados
+            )
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Controls
         TemplatePadding: =0
