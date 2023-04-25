@@ -7,7 +7,7 @@ srcInicio As screen:
         =If(
             Connection.Connected,
             //ONLINE consulto de dataverse
-            Collect(
+            ClearCollect(
                 seguimientoFacturasCollect,
                 AddColumns(
                     SortByColumns(
@@ -28,12 +28,9 @@ srcInicio As screen:
                     true
                 )
             );
-            //ClearData("seguimientoFacturasData");;
-            //guardo en memoria 
-            SaveData(
-                seguimientoFacturasCollect,
-                "seguimientoFacturasData"
-            )
+            ClearData("seguimientoFacturasData");
+            // guardo en memoria 
+            SaveData(   seguimientoFacturasCollect,"seguimientoFacturasData")
             //OFFLINE cargo del local si habia
             //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
         );
