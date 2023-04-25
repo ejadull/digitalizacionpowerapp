@@ -24,7 +24,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2160,
+                  "charOffset": 2183,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -64,7 +64,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2178,
+                  "charOffset": 2201,
                   "snippet": {
                     "text": "&&"
                   }
@@ -104,7 +104,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2261,
+                  "charOffset": 2284,
                   "snippet": {
                     "text": "&&"
                   }
@@ -144,7 +144,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2291,
+                  "charOffset": 2314,
                   "snippet": {
                     "text": "&&"
                   }
@@ -184,7 +184,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2342,
+                  "charOffset": 2365,
                   "snippet": {
                     "text": "&&"
                   }
@@ -224,7 +224,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2557,
+                  "charOffset": 2580,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -264,47 +264,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2575,
-                  "snippet": {
-                    "text": "&&"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnStart",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Filter"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-SuggestRemoteExecutionHint",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.OnStart"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.OnStart",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 2,
-                  "charOffset": 2628,
+                  "charOffset": 2598,
                   "snippet": {
                     "text": "&&"
                   }
@@ -383,8 +343,48 @@
                   "relativeAddress": 0
                 },
                 "region": {
+                  "charLength": 2,
+                  "charOffset": 2674,
+                  "snippet": {
+                    "text": "&&"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnStart",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "Filter"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 0
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.OnStart"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.OnStart",
+                  "relativeAddress": 0
+                },
+                "region": {
                   "charLength": 7,
-                  "charOffset": 2842,
+                  "charOffset": 2865,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -424,7 +424,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2860,
+                  "charOffset": 2883,
                   "snippet": {
                     "text": "&&"
                   }
@@ -464,7 +464,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2916,
+                  "charOffset": 2939,
                   "snippet": {
                     "text": "&&"
                   }
@@ -504,7 +504,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2946,
+                  "charOffset": 2969,
                   "snippet": {
                     "text": "&&"
                   }
@@ -544,7 +544,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 5358,
+                  "charOffset": 5381,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -3984,6 +3984,36 @@
               },
               "properties": {
                 "member": "scanning-a-document-outlined-interface-sybol_icon-icons.com_57770",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedMediaResources",
+          "ruleIndex": 6
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.loaderAnim"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.loaderAnim",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "loaderAnim",
                 "module": "App",
                 "type": "App"
               }

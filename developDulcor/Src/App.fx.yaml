@@ -2,7 +2,7 @@ App As appinfo:
     BackEnabled: =false
     OnStart: |-
         =//declaracion de variables GLOBALES, colecciones y VARS
-        
+        Set(showLoader, true);
         //SIEMPRE
         If(
             Connection.Connected,
@@ -147,5 +147,7 @@ App As appinfo:
         
             //guardo en memoria 
             SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" ) 
-        )
+        );
+        
+        Set(showLoader, false)
 

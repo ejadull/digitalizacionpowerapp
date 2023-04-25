@@ -615,3 +615,9 @@ srcInicio As screen:
         Width: =86
         ZIndex: =19
 
+    Preloader_1 As Preloader:
+        IsLoading: =showLoader
+        Text: ="CARGANDO..."
+        Visible: =Preloader_1.IsLoading
+        ZIndex: =20
+
