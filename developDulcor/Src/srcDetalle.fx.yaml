@@ -19,7 +19,7 @@
 
     frmDetalle As form:
         BorderColor: =RGBA(32, 54, 71, 1)
-        DataSource: = seguimientoFacturasCollect //'Seguimiento Comprobantes'//
+        DataSource: = seguimientoFacturasCollect
         Height: =Parent.Height - frmDetalle.Y
         Item: =_factura
         Width: =Parent.Width
