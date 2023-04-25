@@ -3,7 +3,23 @@
     ImagePosition: =ImagePosition.Fill
     LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
     OnVisible: |-
-        =UpdateContext({ cloneData : seguimientoFacturasCollect, soloSinGuardar: false, mostrarModalRefresh:false})
+        =UpdateContext(
+            {
+                //cloneData: seguimientoFacturasCollect;
+                cloneData: SortByColumns(
+                    Filter(
+                        seguimientoFacturasCollect,
+                        //txtBusqueda.Text in 'Numero de Comprobante'
+                         OrdenEstado = 0,
+                         Online = false // solo los modificados
+                    ),
+                    "pss_ordenestado",
+                    SortOrder.Ascending
+                ),
+                soloSinGuardar: false,
+                mostrarModalRefresh: false
+            }
+        )
 
     Header_8 As Header:
         COLORheader1: =RGBA(237, 237, 237, 1)
@@ -94,6 +110,7 @@
         Height: =27
         Size: =11
         Text: ="Mostrando  " & Text(galConfigEstados.Selected.nombre) & " y  Offline" //If(soloSinGuardar;"Offline"; "Online")
+        Visible: =false
         Width: =320
         X: =10
         Y: =139
@@ -118,22 +135,22 @@
         Y: =87
         ZIndex: =5
 
-    Image2 As image:
+    nousar_Image2 As image:
         BorderColor: =RGBA(32, 54, 71, 1)
         DisabledBorderColor: =RGBA(166, 166, 166, 1)
-        DisabledFill: =RGBA(244, 244, 244, 1)
+        DisabledFill: =RGBA(224, 228, 230, 1)
         Height: =49
         Image: =sincronizar
+        Visible: =false
         Width: =69
         X: =476
         Y: =6
         ZIndex: =6
 
-    btnSync As button:
+    nousar_btnSync As button:
         DisabledBorderColor: =RGBA(166, 166, 166, 1)
         DisabledColor: =RGBA(166, 166, 166, 1)
         DisabledFill: =RGBA(244, 244, 244, 1)
-        DisplayMode: =If(Connection.Connected,DisplayMode.Edit,Disabled)
         Fill: =RGBA(0, 0, 0, 0)
         FontWeight: =FontWeight.Semibold
         Height: =50
@@ -286,6 +303,7 @@
         RadiusTopRight: =25
         Size: =24
         Text: =""
+        Visible: =false
         Width: =56
         X: =483
         Y: =5
@@ -297,8 +315,8 @@
         Items: |-
             =        Filter(//por estado
                         cloneData,
-                        Text(estado_recepcion1) in Text('Estado de Recepción'),
-                        Online = false // solo los modificados
+                        Text(estado_recepcion1) in Text('Estado de Recepción')
+                        //Online = false // solo los modificados
                     )
                     //;
               /* Filter(//por estado
@@ -455,13 +473,27 @@
         Color: =RGBA(32, 54, 71, 1)
         DisabledBorderColor: =RGBA(166, 166, 166, 1)
         DisabledColor: =RGBA(244, 244, 244, 1)
-        Height: =46
-        Icon: =Icon.Reload
+        Height: =50
+        Icon: =Icon.Reset
         OnSelect: |-
-            =UpdateContext({ soloSinGuardar1: false, estado_recepcion1: "" })
-        Width: =39
-        X: =491
-        Y: =86
+            =UpdateContext(
+                {
+                     cloneData: SortByColumns(
+                        Filter(
+                            seguimientoFacturasCollect,
+                             OrdenEstado = 0,
+                             Online = false // solo los modificados
+                        ),
+                        "pss_ordenestado",
+                        SortOrder.Ascending
+                    ),
+                    soloSinGuardar1: false,
+                    estado_recepcion1: ""
+                }
+            )
+        Width: =50
+        X: =483
+        Y: =75
         ZIndex: =9
 
     Icon5 As icon.Cancel:
@@ -482,6 +514,157 @@
         Text: ="GUARDANDO..."
         Visible: =Preloader_3.IsLoading
         ZIndex: =18
+
+    IconSYNC As icon.Sync:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =50
+        Icon: =Icon.Sync
+        OnSelect: |-
+            =UpdateContext({mostrarModalRefresh: true});
+            If(
+                And(
+                    Connection.Connected,
+                    CountRows(cloneData) > 0
+                ),
+                UpdateContext(
+                    {
+                        ListaModificados: Filter(//registros que estan con bandera offline y id principal que no estan vacios para separar los modificados
+                            seguimientoFacturasCollect,
+                            Online = false && And(
+                                !IsEmpty(pss_seguimientocomprobantesid),
+                                !IsBlank(pss_seguimientocomprobantesid)
+                            )
+                        )
+                    }
+                );
+                ForAll(//resguardo modificados
+                    ListaModificados As ModifReg,
+                    Patch(
+                        'Seguimiento Comprobantes',
+                        LookUp(
+                            'Seguimiento Comprobantes',
+                            'Seguimiento Comprobantes' = ModifReg.'Seguimiento Comprobantes'
+                        ),
+                        {
+                            'Numero de Comprobante': ModifReg.'Numero de Comprobante',
+                            Transportista: ModifReg.Transportista,
+                            Cliente: ModifReg.Cliente,
+                            'Estado de Recepción': ModifReg.'Estado de Recepción',
+                            Observaciones: ModifReg.Observaciones,
+                            'Foto Adjunta 1': ModifReg.'Foto Adjunta 1',
+                            'Foto Adjunta 2': ModifReg.'Foto Adjunta 2',
+                            'Foto Adjunta 3': ModifReg.'Foto Adjunta 3',
+                            'Foto Adjunta 4': ModifReg.'Foto Adjunta 4'
+                             //Attachments: ModifReg.Attachments
+                        }
+                    )
+                ),
+                Notify(
+                    "No se encontró acceso a internet, intente más tarde.",
+                    NotificationType.Error,
+                    1500
+                );
+                UpdateContext({mostrarModalRefresh: false});
+                
+            );
+            If(
+                Connection.Connected,
+                //Limpieza
+                Clear(contactosClientesCollect);
+                Clear(contactosTransportesCollect);
+                Clear(seguimientoFacturasCollect);
+                ClearData("contactosClientesData");
+                ClearData("contactosTransportesData");
+                ClearData("seguimientoFacturasData");
+                
+            //consulto de dataverse
+            Concurrent(
+                    Collect(
+                        contactosClientesCollect,
+                        SortByColumns(
+                            Filter(
+                                Contactos,
+                                statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Cliente" && !IsBlank(pss_cuit) && pss_cuit <> ""
+                            ),
+                            "pss_nombrefullcontacto",
+                            SortOrder.Ascending
+                        )
+                    ),
+                    Collect(
+                        contactosTransportesCollect,
+                        SortByColumns(
+                            Filter(
+                                Contactos,
+                                statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> ""
+                            ),
+                            "pss_nombrefullcontacto",
+                            SortOrder.Ascending
+                        )
+                    ),
+                     //ONLINE consulto de dataverse
+                    Collect(
+                        seguimientoFacturasCollect,
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    'Seguimiento Comprobantes',
+                                    statecode exactin "Activo",
+                                    Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                                ),//pss_transportista
+                                "pss_fechacomprobante",
+                                SortOrder.Descending,
+                                "pss_estadoderecepcion",
+                                SortOrder.Descending
+                            ),
+                            "IdLocal",
+                            GUID(),
+                            "Online",
+                            true
+                        )
+                    )
+                );
+                ClearData("contactosClientesData");
+                ClearData("contactosTransportesData");
+                ClearData("seguimientoFacturasData");
+                //guardo en memoria
+            SaveData(
+                    contactosClientesCollect,
+                    "contactosClientesData"
+                );
+                SaveData(
+                    contactosTransportesCollect,
+                    "contactosTransportesData"
+                );
+                SaveData(
+                    seguimientoFacturasCollect,
+                    "seguimientoFacturasData"
+                )
+            );
+            UpdateContext({mostrarModalRefresh: false});
+            Navigate(
+                srcOk,
+                Transition.Push
+            )
+        Visible: =Connection.Connected
+        Width: =50
+        X: =483
+        Y: =5
+        ZIndex: =19
+
+    Label9 As label:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(0, 0, 0, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Height: =14
+        Size: =8
+        Text: ="restablecer"
+        Width: =72
+        X: =477
+        Y: =130
+        ZIndex: =20
 
     ModalRefresh As group:
         Height: =5

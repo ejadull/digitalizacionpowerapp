@@ -5099,7 +5099,7 @@
         {
           "AFDDataSourceName": "",
           "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "SampleImage",
+          "AutoRuleBindingString": "",
           "InvariantPropertyName": "AnimatedGIF",
           "IsLockable": false,
           "NameMapSourceSchema": "?"
@@ -5167,7 +5167,7 @@
         {
           "Category": "Data",
           "PropertyName": "AnimatedGIF",
-          "RuleProviderType": "System"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Data",

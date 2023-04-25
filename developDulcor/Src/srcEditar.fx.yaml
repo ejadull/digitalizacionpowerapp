@@ -1225,14 +1225,16 @@
                     seguimientoFacturasCollect,
                     "seguimientoFacturasData"
                 );
+                /*
                 SaveData(
-                    tipoContactoOpcionesCollect,
+                    tipoContactoOpcionesCollect;
                     "tipoContactoOpcionesData"
-                );
+                );;
                 SaveData(
-                    estadoRecepcionOpcionesCollect,
+                    estadoRecepcionOpcionesCollect;
                     "estadoRecepcionOpcionesData"
-                );
+                );;
+                */
                 UpdateContext({mostrarModalRefreshEdit: false});
                 //flujo comun
                 Clear(MyPixs);
@@ -1240,7 +1242,7 @@
                 Navigate( srcInicio, ScreenTransition.Cover),
             
                 //OFFLINE actualizo e registro en la collection para marcarlo como offline false
-                UpdateContext({mostrarModalRefreshEdit: true});
+                UpdateContext({ mostrarModalRefreshEdit: true });
                 Patch(
                     seguimientoFacturasCollect,
                     LookUp(

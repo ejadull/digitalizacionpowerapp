@@ -4,21 +4,46 @@ srcInicio As screen:
     ImagePosition: =ImagePosition.Fill
     LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
     OnVisible: |-
-        =UpdateContext(
+        =If(
+            Connection.Connected,
+            //ONLINE consulto de dataverse
+            Collect(seguimientoFacturasCollect,
+                    AddColumns(SortByColumns(
+                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(User().Email) in Lower(Transportista.'Correo electrónico')), //pss_transportista
+                        "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                );
+            ClearData("seguimientoFacturasData");
+        
+            //guardo en memoria 
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
+            //OFFLINE cargo del local si habia
+            //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
+        );
+        
+        LoadData(seguimientoFacturasCollect, "seguimientoFacturasData");
+        UpdateContext(
             {
                 estado_recepcion: "",
                 seguimientoList: SortByColumns(
-                    seguimientoFacturasCollect,
                     /*
                     Filter(
                         seguimientoFacturasCollect;
-                        txtBusqueda.Text in 'Numero de Comprobante';
-                        //OrdenEstado = 0;
+                        //txtBusqueda.Text in 'Numero de Comprobante'
+                         //OrdenEstado = 0;
                         //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
                         //Lower(Transportista.'Correo electrónico')=User().Email
-                       Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                       //Lower(User().Email) in Lower(Transportista.'Correo electrónico')
                     );
                     */
+                    Filter(
+                        seguimientoFacturasCollect,
+                        //txtBusqueda.Text in 'Numero de Comprobante'
+                         OrdenEstado = 0,
+                         Online = true
+                        //Transportista.IdTrasporte=_transportistaActual.IdTrasporte;
+                        //Lower(Transportista.'Correo electrónico')=User().Email
+                       //Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                    ),
                     "pss_ordenestado",
                     SortOrder.Ascending
                 )
@@ -464,9 +489,9 @@ srcInicio As screen:
                             Filter(
                                 seguimientoFacturasCollect,
                                 txtBusqueda.Text in 'Numero de Comprobante',
-                                ThisItem.nombre in Text('Estado de Recepción'),
+                                ThisItem.nombre in Text('Estado de Recepción')
                                 //estado_recepcion = Text('Estado de Recepción');
-                                Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                                //Lower(User().Email) in Lower(Transportista.'Correo electrónico')
                             ),
                             
                             "pss_ordenestado",
@@ -616,6 +641,7 @@ srcInicio As screen:
         ZIndex: =19
 
     Preloader_1 As Preloader:
+        AnimatedGIF: =animatedGif
         IsLoading: =showLoader
         Text: =locMensaje //& Upper(User().FullName)
         Visible: =Preloader_1.IsLoading
