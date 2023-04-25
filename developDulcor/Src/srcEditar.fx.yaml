@@ -1209,10 +1209,8 @@
                     AddColumns(
                         SortByColumns(
                             Filter(//fix delegacion
-                                Filter(
-                                    'Seguimiento Comprobantes',
-                                    statecode = 0 // "Activo"
-                                ),
+                                'Seguimiento Comprobantes',
+                                statecode in "Activo",
                                 //Lower(User().Email) = Lower(Transportista.'Correo electrónico')
                                 User().Email = Transportista.'Correo electrónico'
                             ),
