@@ -3,15 +3,28 @@
     ImagePosition: =ImagePosition.Fill
     LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
     OnVisible: |-
-        =UpdateContext(
+        =ClearCollect(
+            _cloneDataCollection,
+            SortByColumns(
+                Filter(
+                    seguimientoFacturasCollect,
+                        //txtBusqueda.Text in 'Numero de Comprobante'
+                    OrdenEstado = 0,
+                    Online = false// solo los modificados
+                ),
+                "pss_ordenestado",
+                SortOrder.Ascending
+            )
+        );
+        UpdateContext(
             {
                 //cloneData: seguimientoFacturasCollect;
                 cloneData: SortByColumns(
                     Filter(
                         seguimientoFacturasCollect,
                         //txtBusqueda.Text in 'Numero de Comprobante'
-                         OrdenEstado = 0,
-                         Online = false // solo los modificados
+                        OrdenEstado = 0,
+                        Online = false// solo los modificados
                     ),
                     "pss_ordenestado",
                     SortOrder.Ascending
@@ -314,7 +327,7 @@
         Height: =955
         Items: |-
             =Filter(//por estado
-                cloneData,
+                _cloneDataCollection,//cloneData;
                 Text(estado_recepcion1) in Text('Estado de Recepción')
                 //Online = false // solo los modificados
             )
@@ -502,7 +515,7 @@
             If(
                 And(
                     Connection.Connected,
-                    CountRows(cloneData) > 0
+                    CountRows(_cloneDataCollection) > 0//CountRows(cloneData) > 0
                 ),
                 UpdateContext(
                     {
@@ -516,7 +529,7 @@
                     }
                 );
                 ForAll(//resguardo modificados
-                    ListaModificados As ModifReg,
+                    _cloneDataCollection As ModifReg,
                     Patch(
                         'Seguimiento Comprobantes',
                         LookUp(

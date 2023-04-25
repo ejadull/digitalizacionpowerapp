@@ -1250,7 +1250,7 @@
                 
                 //OFFLINE actualizo e registro en la collection para marcarlo como offline false
                 UpdateContext({mostrarModalRefreshEdit: true});
-                Patch(
+                Update(
                     seguimientoFacturasCollect,
                     LookUp(
                         seguimientoFacturasCollect,
