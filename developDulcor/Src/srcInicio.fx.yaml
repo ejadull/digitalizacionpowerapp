@@ -28,9 +28,9 @@ srcInicio As screen:
                     true
                 )
             );
-            ClearData("seguimientoFacturasData");
+            //ClearData("seguimientoFacturasData");;
             //guardo en memoria 
-        SaveData(
+            SaveData(
                 seguimientoFacturasCollect,
                 "seguimientoFacturasData"
             )
