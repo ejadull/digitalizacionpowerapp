@@ -1,27 +1,39 @@
 App As appinfo:
     BackEnabled: =false
-    OnStart: |-
+    OnStart: |
         =//declaracion de variables GLOBALES, colecciones y VARS
-        Set(showLoader, true);
+        Set(
+            showLoader,
+            true
+        );
         //ONLINE
         If(
             Connection.Connected,
-            Set(locMensaje, "Cargando datos de la aplicación"),
-            Set(locMensaje, "Cargando datos desde su Dispositivo")
+            Set(
+                locMensaje,
+                "Cargando datos de la aplicación"
+            ),
+            Set(
+                locMensaje,
+                "Cargando datos desde su Dispositivo"
+            )
         );
-        
         If(
             Connection.Connected,
             //Limpieza
-            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);Clear(variablesEntornoCollect);
-            ClearData("contactosClientesData"); 
-            ClearData("contactosTransportesData" );
+            Clear(contactosClientesCollect);
+            Clear(contactosTransportesCollect);
+            Clear(seguimientoFacturasCollect);
+            Clear(variablesEntornoCollect);
+            ClearData("contactosClientesData");
+            ClearData("contactosTransportesData");
             ClearData("seguimientoFacturasData");
             ClearData("variablesEntornoData")
         );
-        
         // SIEMPRE
-        Collect(tipoContactoOpcionesCollect,  Table(
+        Collect(
+            tipoContactoOpcionesCollect,
+            Table(
                 {
                     nombre: "Cliente",
                     valor: 100000000
@@ -34,9 +46,11 @@ App As appinfo:
                     nombre: "Otro",
                     valor: 100000002
                 }
-            ));
-         
-        Collect(estadoRecepcionOpcionesCollect, Table(
+            )
+        );
+        Collect(
+            estadoRecepcionOpcionesCollect,
+            Table(
                 {
                     nombre: "Recibido",
                     optionSet: 'Estado de Recepción (Seguimiento Comprobantes)'.Recibido,
@@ -52,87 +66,110 @@ App As appinfo:
                     optionSet: 'Estado de Recepción (Seguimiento Comprobantes)'.Rechazado,
                     valor: 100000002//'Estado de Recepción (Seguimiento Comprobantes)'.Rechazado//
                 }
-            ));
-        SaveData(tipoContactoOpcionesCollect, "tipoContactoOpcionesData" );
-        SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
-        
-        Collect(variablesEntornoCollect, Table());
-        SaveData(variablesEntornoCollect, "variablesEntornoData" );
-         
+            )
+        );
+        SaveData(
+            tipoContactoOpcionesCollect,
+            "tipoContactoOpcionesData"
+        );
+        SaveData(
+            estadoRecepcionOpcionesCollect,
+            "estadoRecepcionOpcionesData"
+        );
+        Collect(
+            variablesEntornoCollect,
+            Table()
+        );
+        SaveData(
+            variablesEntornoCollect,
+            "variablesEntornoData"
+        );
         If(
             Connection.Connected,
-            //consulto de dataverse
-            
-            Concurrent(
-                //cargo el Record del transportista que esta usando la aplicacion
-                Collect(variablesEntornoCollect, Table(
-                    {
-                        transportistaActual: First(
-                            Filter(Contactos, 
-                                statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
-                                &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
-                                && Lower(emailaddress1) = Lower(User().Email) // <<< email del user actual tiene que estar en el contacto
+            Concurrent(//consulto de dataverse
+                Collect(
+                    variablesEntornoCollect,
+                    Table(//cargo el Record del transportista que esta usando la aplicacion
+                        {
+                            transportistaActual: First(
+                                Filter(
+                                    Contactos,
+                                    statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> "" && Lower(emailaddress1) = Lower(User().Email)// <<< email del user actual tiene que estar en el contacto
+                                )
                             )
-                        )
-                    }
-                ));
-                //cargo contactos tipo clientes
-                Collect(contactosClientesCollect,
-                    SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
-                    
+                        }
+                    )
+                );
+                Collect(
+                    contactosClientesCollect,//cargo contactos tipo clientes
+                    SortByColumns(
+                        Filter(
+                            Contactos,
+                            statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Cliente" && !IsBlank(pss_cuit) && pss_cuit <> ""
+                        ),
+                        "pss_nombrefullcontacto",
+                        SortOrder.Ascending
+                    )
                 ),
-                Collect(contactosTransportesCollect,
-                SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"  &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
-                    
+                Collect(
+                    contactosTransportesCollect,
+                    SortByColumns(
+                        Filter(
+                            Contactos,
+                            statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> ""
+                        ),
+                        "pss_nombrefullcontacto",
+                        SortOrder.Ascending
+                    )
                 )
-                 
-                //QUERY OK   pedro.hildmann@dulcor.com.ar
-                /*
-                Collect(seguimientoFacturasCollect;
-                    AddColumns(
-                        SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo"; Lower(emailaddress) exactin Lower(User().Email) );"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending; "createdon";SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
-                )
-                */
-                
-        //; "createdon";SortOrder.Descending  //;Lower(User().Email) in Lower(emailaddress)
-                /*
-                Collect(seguimientoFacturasCollect;
-                    AddColumns(SortByColumns(Filter('Seguimiento Comprobantes'; statecode exactin  "Activo");"pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
-                )
-                */
-                
             );
             //los borro al inicio
-            //ClearData("contactosClientesData");; 
+            /*ClearData("contactosClientesData");; 
             //ClearData( "contactosTransportesData" );;
-            //ClearData("seguimientoFacturasData");;
-        
-            //guardo en memoria
-            SaveData(contactosClientesCollect, "contactosClientesData");
-            SaveData(contactosTransportesCollect, "contactosTransportesData");
+            ClearData("seguimientoFacturasData");;
+            */
+        SaveData(//guardo en memoria
+                contactosClientesCollect,
+                "contactosClientesData"
+            );
+            SaveData(
+                contactosTransportesCollect,
+                "contactosTransportesData"
+            );
            //SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" );;
-            SaveData(variablesEntornoCollect, "variablesEntornoData" )
+        SaveData(
+                variablesEntornoCollect,
+                "variablesEntornoData"
+            )
         );
-        
-        
-        
         If(
-            !Connection.Connected,    
-        
+            !Connection.Connected,
             //cargo de las colecciones en  memoria
-            LoadData(contactosClientesCollect, "contactosClientesData");
-            LoadData(contactosTransportesCollect, "contactosTransportesData");
-            LoadData(variablesEntornoCollect, "variablesEntornoData");
+            LoadData(
+                contactosClientesCollect,
+                "contactosClientesData"
+            );
+            LoadData(
+                contactosTransportesCollect,
+                "contactosTransportesData"
+            );
+            LoadData(
+                variablesEntornoCollect,
+                "variablesEntornoData"
+            );
            // LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
-        
             //no haria falta en el offline
             //LoadData(tipoContactoOpcionesCollect; "tipoContactoOpcionesData");;
             //LoadData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData")
-        
         );
-        
-        Set(_transportistaActual, First(variablesEntornoCollect).transportistaActual);
-        
+        Set(
+            _transportistaActual,
+            First(variablesEntornoCollect).transportistaActual
+        );
+        Set(
+            showLoader,
+            false
+        )
         //cargo datos de seguimiento luego de establecer el transportista
         //LO PASO AL ONVISIBLE DE PANTALLA DE INICIO
         /*
@@ -145,13 +182,10 @@ App As appinfo:
                         "pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
                 );;
             ClearData("seguimientoFacturasData");;
-        
             //guardo en memoria 
             SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" )
             //OFFLINE cargo del local si habia
             //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
         );;
         */
-        
-        Set(showLoader, false)
 

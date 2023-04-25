@@ -56,7 +56,7 @@
         Height: =953
         Item: =item3
         OnFailure: =Notify("Ocurió un error al intentar guardar el comprobante", NotificationType.Error, 1500) 
-        OnSuccess: =Notify("Los datos se guardaron correctamente", NotificationType.Success, 1500)
+        OnSuccess: =If(Connection.Connected,Notify("Los datos se guardaron correctamente", NotificationType.Success, 1500),Notify("Los datos se guardaron en el dispositivo", NotificationType.Success, 1500))
         Width: =Parent.Width
         Y: =58
         ZIndex: =3
@@ -1204,24 +1204,27 @@
                 //Limpieza de los datos en el storage
                 Clear(seguimientoFacturasCollect);
                 ClearData("seguimientoFacturasData");
-            
-                // Actualizo mi coleccion desde el dataverse online hacia el storage
-                Collect(
+                Collect(// Actualizo mi coleccion desde el dataverse online hacia el storage
                     seguimientoFacturasCollect,
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    'Seguimiento Comprobantes', 
-                                    statecode exactin  "Activo", 
-                                    Lower(User().Email) in Lower(Transportista.'Correo electrónico')
-                                ), 
-                                "pss_fechacomprobante",SortOrder.Descending, 
-                                "pss_estadoderecepcion", SortOrder.Descending
-                            ), "IdLocal", GUID(), "Online", true
-                        )
+                    AddColumns(
+                        SortByColumns(
+                            Filter(
+                                'Seguimiento Comprobantes',
+                                statecode exactin "Activo",
+                                Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                            ),
+                            "pss_fechacomprobante",
+                            SortOrder.Descending,
+                            "pss_estadoderecepcion",
+                            SortOrder.Descending
+                        ),
+                        "IdLocal",
+                        GUID(),
+                        "Online",
+                        true
+                    )
                 );
-                //guardo en memoria
-                SaveData(
+                SaveData(//guardo en memoria
                     seguimientoFacturasCollect,
                     "seguimientoFacturasData"
                 );
@@ -1239,10 +1242,13 @@
                 //flujo comun
                 Clear(MyPixs);
                 ResetForm(frmAlta_1);
-                Navigate( srcInicio, ScreenTransition.Cover),
-            
+                Navigate(
+                    srcInicio,
+                    ScreenTransition.Cover
+                ),
+                
                 //OFFLINE actualizo e registro en la collection para marcarlo como offline false
-                UpdateContext({ mostrarModalRefreshEdit: true });
+                UpdateContext({mostrarModalRefreshEdit: true});
                 Patch(
                     seguimientoFacturasCollect,
                     LookUp(
@@ -1253,8 +1259,7 @@
                         Observaciones: txtObservaciones_1.Text,
                         'Foto Adjunta 1': foto1.Image,
                         'Foto Adjunta 2': foto2.Image,
-                        Online: false,
-                        //se fambia porque fue modificado
+                        Online: false, //se cambia porque fue modificado
                         'Estado de Recepción': estado_recepcion_obj.optionSet
                         //'Numero de Comprobante': txtComprobante_1.Text;
                         //Cliente: cmbCliente_1.Selected;
@@ -1269,7 +1274,10 @@
                 Clear(MyPixs);
                 ResetForm(frmAlta_1);
                 UpdateContext({mostrarModalRefreshEdit: false});
-                Navigate( srcInicio, ScreenTransition.Cover)
+                Navigate(
+                    srcInicio,
+                    ScreenTransition.Cover
+                )
             )
         PaddingBottom: =5
         PaddingLeft: =5
