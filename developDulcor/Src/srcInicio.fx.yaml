@@ -617,7 +617,7 @@ srcInicio As screen:
 
     Preloader_1 As Preloader:
         IsLoading: =showLoader
-        Text: ="CARGANDO..."
+        Text: ="CARGANDO COMPROBANTES..." //& Upper(User().FullName)
         Visible: =Preloader_1.IsLoading
         ZIndex: =20
 
