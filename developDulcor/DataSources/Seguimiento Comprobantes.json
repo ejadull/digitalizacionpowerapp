@@ -6,7 +6,7 @@
     "IsSampleData": false,
     "IsWritable": true,
     "LogicalName": "pss_seguimientocomprobantes",
-    "MaxGetRowsCount": 250,
+    "MaxGetRowsCount": 500,
     "Name": "Seguimiento Comprobantes",
     "NativeCDSDataSourceInfoNameMapping": {
       "_ownerid_value": "Propietario",

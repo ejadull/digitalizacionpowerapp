@@ -1,6 +1,6 @@
 App As appinfo:
     BackEnabled: =false
-    OnStart: |
+    OnStart: |+
         =//declaracion de variables GLOBALES, colecciones y VARS
         Set(
             showLoader,
@@ -23,7 +23,7 @@ App As appinfo:
             //Limpieza
             Clear(contactosClientesCollect);
             Clear(contactosTransportesCollect);
-            Clear(seguimientoFacturasCollect);
+            //Clear(seguimientoFacturasCollect);;
             Clear(variablesEntornoCollect);
             ClearData("contactosClientesData");
             ClearData("contactosTransportesData");
@@ -169,23 +169,23 @@ App As appinfo:
         Set(
             showLoader,
             false
-        )
+        );
         //cargo datos de seguimiento luego de establecer el transportista
         //LO PASO AL ONVISIBLE DE PANTALLA DE INICIO
-        /*
+        
         If(
-            Connection.Connected;
+            Connection.Connected,
             //ONLINE consulto de dataverse
-            Collect(seguimientoFacturasCollect;
+            Collect(seguimientoFacturasCollect,
                     AddColumns(SortByColumns(
-                        Filter('Seguimiento Comprobantes'; statecode exactin  "Activo"; Lower(User().Email) in Lower(Transportista.'Correo electrónico')); //pss_transportista
-                        "pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
-                );;
-            ClearData("seguimientoFacturasData");;
+                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(User().Email) in Lower(Transportista.'Correo electrónico')), //pss_transportista
+                        "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                );
+            ClearData("seguimientoFacturasData");
             //guardo en memoria 
-            SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" )
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
             //OFFLINE cargo del local si habia
             //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
-        );;
-        */
+        );
+        
 

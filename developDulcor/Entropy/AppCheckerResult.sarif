@@ -24,7 +24,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2427,
+                  "charOffset": 2429,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -64,7 +64,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2444,
+                  "charOffset": 2446,
                   "snippet": {
                     "text": "&&"
                   }
@@ -104,7 +104,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2498,
+                  "charOffset": 2500,
                   "snippet": {
                     "text": "&&"
                   }
@@ -144,7 +144,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2527,
+                  "charOffset": 2529,
                   "snippet": {
                     "text": "&&"
                   }
@@ -184,7 +184,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2552,
+                  "charOffset": 2554,
                   "snippet": {
                     "text": "&&"
                   }
@@ -224,7 +224,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 2958,
+                  "charOffset": 2960,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -264,7 +264,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 2975,
+                  "charOffset": 2977,
                   "snippet": {
                     "text": "&&"
                   }
@@ -304,7 +304,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 3026,
+                  "charOffset": 3028,
                   "snippet": {
                     "text": "&&"
                   }
@@ -344,7 +344,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 3048,
+                  "charOffset": 3050,
                   "snippet": {
                     "text": "&&"
                   }
@@ -384,7 +384,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 3369,
+                  "charOffset": 3371,
                   "snippet": {
                     "text": "exactin"
                   }
@@ -424,7 +424,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 3386,
+                  "charOffset": 3388,
                   "snippet": {
                     "text": "&&"
                   }
@@ -464,7 +464,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 3440,
+                  "charOffset": 3442,
                   "snippet": {
                     "text": "&&"
                   }
@@ -504,9 +504,49 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 3469,
+                  "charOffset": 3471,
                   "snippet": {
                     "text": "&&"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnStart",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "Filter"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 0
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.OnStart"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.OnStart",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 5254,
+                  "snippet": {
+                    "text": "exactin"
                   }
                 }
               },
@@ -1263,10 +1303,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 293,
+                  "charLength": 7,
+                  "charOffset": 209,
                   "snippet": {
-                    "text": "in"
+                    "text": "exactin"
                   }
                 }
               },
@@ -1286,8 +1326,8 @@
           "properties": {
             "level": "Medium"
           },
-          "ruleId": "app-SuggestRemoteExecutionHint-InOpRhs",
-          "ruleIndex": 1
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 0
         },
         {
           "locations": [

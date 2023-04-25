@@ -7,33 +7,18 @@ srcInicio As screen:
         =If(
             Connection.Connected,
             //ONLINE consulto de dataverse
-            ClearCollect(
-                seguimientoFacturasCollect,
-                AddColumns(
-                    SortByColumns(
-                        Filter(//fix delegacion
-                            'Seguimiento Comprobantes',
-                            statecode in "Activo",
-                            //Lower(User().Email) = Lower(Transportista.'Correo electrónico')
-                            User().Email = Transportista.'Correo electrónico'
-                        ),
-                        "pss_fechacomprobante",
-                        SortOrder.Descending,
-                        "pss_estadoderecepcion",
-                        SortOrder.Descending
-                    ),
-                    "IdLocal",
-                    GUID(),
-                    "Online",
-                    true
-                )
-            );
+            Collect(seguimientoFacturasCollect,
+                    AddColumns(SortByColumns(
+                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", User().Email = Transportista.'Correo electrónico'), //pss_transportista
+                        "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
+                );
             ClearData("seguimientoFacturasData");
-            // guardo en memoria 
-            SaveData(   seguimientoFacturasCollect,"seguimientoFacturasData")
+            //guardo en memoria 
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
             //OFFLINE cargo del local si habia
             //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
         );
+        
         LoadData(
             seguimientoFacturasCollect,
             "seguimientoFacturasData"
