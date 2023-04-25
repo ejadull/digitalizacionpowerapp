@@ -57,74 +57,48 @@
         DisabledColor: =RGBA(244, 244, 244, 1)
         Height: =60
         Icon: =Icon.Check
-        OnSelect: |
+        OnSelect: |-
             =//SubmitForm(frmEditar);;Collect(MyPixs; {} );;Navigate(srcOk;ScreenTransition.Cover)
-            
             If(
                 Connection.Connected,
                 UpdateContext({mostrarModalRefreshEdit: true});
                 //ONLINE, actualiza item y actualiza las collecciones
-                Patch('Seguimiento Comprobantes' , LookUp('Seguimiento Comprobantes', pss_numerodeseguimiento = item3.pss_numerodeseguimiento),
-                {
-                    Observaciones: txtObservaciones_1.Text,
-                    'Foto Adjunta 1': foto1.Image,
-                    'Foto Adjunta 2': foto2.Image,
-                    //'Foto Adjunta 3': foto3.Image;
-                    //Online: false;//se fambia porque fue modificado
-                    'Estado de Recepción': estado_recepcion_obj.optionSet//    cbmEstado_2.Selected.optionSet
-                }); 
-                //Limpieza
-                //Clear(contactosClientesCollect);;
-                //Clear(contactosTransportesCollect);;
+                Patch(
+                    'Seguimiento Comprobantes',
+                    LookUp(
+                        'Seguimiento Comprobantes',
+                        pss_numerodeseguimiento = item3.pss_numerodeseguimiento
+                    ),
+                    {
+                        Observaciones: txtObservaciones_1.Text,
+                        'Foto Adjunta 1': foto1.Image,
+                        'Foto Adjunta 2': foto2.Image,
+                        'Estado de Recepción': estado_recepcion_obj.optionSet
+                        //'Foto Adjunta 3': foto3.Image;
+                        //Online: false;//se fambia porque fue modificado
+                    }
+                );
+                //Limpieza de los datos en el storage
                 Clear(seguimientoFacturasCollect);
-                //ClearData("contactosClientesData");;
-                //ClearData("contactosTransportesData");;
                 ClearData("seguimientoFacturasData");
-                
-                //actualizo de dataverse
-                //Concurrent(
-                    /*
-                    Collect(contactosClientesCollect;
-                        SortByColumns(
-                            Filter(Contactos; 
-                                    statecode exactin  "Activo" &&  
-                                    pss_tipodecontactoseguimiento exactin "Cliente"  &&  
-                                    !IsBlank(pss_cuit) && pss_cuit <> ""); 
-                                    "pss_nombrefullcontacto"; Ascending) 
-                        
-                    );
-                    Collect(contactosTransportesCollect;
-                        SortByColumns(
-                            Filter(Contactos; 
-                            statecode exactin  "Activo" &&  
-                            pss_tipodecontactoseguimiento exactin "Transporte"  &&  
-                            !IsBlank(pss_razonsocial) && pss_razonsocial <> ""); 
-                            "pss_nombrefullcontacto"; Ascending) 
-                        
-                    );
-                    */
-                    Collect(seguimientoFacturasCollect,
+            
+                // Actualizo mi coleccion desde el dataverse online hacia el storage
+                Collect(
+                    seguimientoFacturasCollect,
                         AddColumns(
-                             SortByColumns(Filter('Seguimiento Comprobantes', statecode exactin  "Activo" ),"modifiedon", SortOrder.Descending), 
-                            "IdLocal", GUID(), "Online", true
+                            SortByColumns(
+                                Filter(
+                                    'Seguimiento Comprobantes', 
+                                    statecode exactin  "Activo", 
+                                    Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                                ), 
+                                "pss_fechacomprobante",SortOrder.Descending, 
+                                "pss_estadoderecepcion", SortOrder.Descending
+                            ), "IdLocal", GUID(), "Online", true
                         )
-                    );
-                //);;
-             
-                //ClearData("contactosClientesData");;
-                //ClearData("contactosTransportesData");;
+                );
                 ClearData("seguimientoFacturasData");
                 //guardo en memoria
-                /*
-                SaveData(
-                    contactosClientesCollect;
-                    "contactosClientesData"
-                );;
-                SaveData(
-                    contactosTransportesCollect;
-                    "contactosTransportesData"
-                );;
-                */
                 SaveData(
                     seguimientoFacturasCollect,
                     "seguimientoFacturasData"
@@ -139,27 +113,37 @@
                 );
                 UpdateContext({mostrarModalRefreshEdit: false});
                 //flujo comun
-                Clear(MyPixs);ResetForm(frmAlta_1);Navigate(srcInicio,ScreenTransition.Cover),
-                //OFFLINE
-                Patch(seguimientoFacturasCollect, LookUp(seguimientoFacturasCollect, IdLocal = item3.IdLocal),
-                {
-                    //'Numero de Comprobante': txtComprobante_1.Text;
-                    //Cliente: cmbCliente_1.Selected;
-                    //Transportista: cmbTransportista.Selected;
-                    Observaciones: txtObservaciones_1.Text,
-                    //Attachments: tatAttachments_1.Attachments;//no usa r attachments usar campo imagen o doc por separado
-                // Name:txtName_2.Text;
-                    //IdLocal: GUID();
-                    'Foto Adjunta 1': foto1.Image,
-                    'Foto Adjunta 2': foto2.Image,
-                    'Foto Adjunta 3': foto3.Image,
-                    //'Foto Adjunta 4': foto3;// de momento no usar
-                    Online: false,//se fambia porque fue modificado
-                    'Estado de Recepción': estado_recepcion_obj.optionSet//    cbmEstado_2.Selected.optionSet
-                    
-                });
-                Clear(MyPixs);ResetForm(frmAlta_1);Navigate(srcInicio,ScreenTransition.Cover)
-                
+                Clear(MyPixs);
+                ResetForm(frmAlta_1);
+                Navigate( srcInicio, ScreenTransition.Cover),
+            
+                //OFFLINE actualizo ek registro en la collection para marcarlo como offline false
+                Patch(
+                    seguimientoFacturasCollect,
+                    LookUp(
+                        seguimientoFacturasCollect,
+                        IdLocal = item3.IdLocal
+                    ),
+                    {
+                        Observaciones: txtObservaciones_1.Text,
+                        'Foto Adjunta 1': foto1.Image,
+                        'Foto Adjunta 2': foto2.Image,
+                        Online: false,
+                        //se fambia porque fue modificado
+                        'Estado de Recepción': estado_recepcion_obj.optionSet
+                        //'Numero de Comprobante': txtComprobante_1.Text;
+                        //Cliente: cmbCliente_1.Selected;
+                        //Transportista: cmbTransportista.Selected;
+                        //Attachments: tatAttachments_1.Attachments;//no usa r attachments usar campo imagen o doc por separado
+                        // Name:txtName_2.Text;
+                        //IdLocal: GUID();            
+                        //'Foto Adjunta 3': foto3.Image;
+                        //'Foto Adjunta 4': foto3;// de momento no usar
+                    }
+                );
+                Clear(MyPixs);
+                ResetForm(frmAlta_1);
+                Navigate( srcInicio, ScreenTransition.Cover)
             )
         PaddingBottom: =5
         PaddingLeft: =5

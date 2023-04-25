@@ -252,31 +252,32 @@ srcInicio As screen:
         HoverFill: =RGBA(0, 0, 0, 0.2)
         Icon: =Icon.Reload
         OnSelect: |-
-            =If(Connection.Connected,
+            =/*
+            If(Connection.Connected;
             
             //Limpieza
-            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);
-            ClearData("contactosClientesData"); 
-            ClearData( "contactosTransportesData" );
-            ClearData("seguimientoFacturasData");
+            Clear(contactosClientesCollect);;Clear(contactosTransportesCollect);;Clear(seguimientoFacturasCollect);;
+            ClearData("contactosClientesData");; 
+            ClearData( "contactosTransportesData" );;
+            ClearData("seguimientoFacturasData");;
             
             //consulto de dataverse
             Concurrent(
-                Collect(contactosClientesCollect,Filter(Contactos, Estado exactin  "Activo" &&  'Tipo de contacto Seguimiento' exactin "Cliente"  &&  !IsBlank(Cuit) && Cuit <> "0")),
-                Collect(contactosTransportesCollect,Filter(Contactos, Estado exactin  "Activo" &&  'Tipo de contacto Seguimiento' exactin "Transporte"  &&  !IsBlank(Cuit)  && Cuit <> "0" )),
-                Collect(seguimientoFacturasCollect,Filter('Seguimiento Comprobantes', Estado exactin  "Activo" ))
-            );
+                Collect(contactosClientesCollect;Filter(Contactos; Estado exactin  "Activo" &&  'Tipo de contacto Seguimiento' exactin "Cliente"  &&  !IsBlank(Cuit) && Cuit <> "0"));
+                Collect(contactosTransportesCollect;Filter(Contactos; Estado exactin  "Activo" &&  'Tipo de contacto Seguimiento' exactin "Transporte"  &&  !IsBlank(Cuit)  && Cuit <> "0" ));
+                Collect(seguimientoFacturasCollect;Filter('Seguimiento Comprobantes'; Estado exactin  "Activo" ))
+            );;
             
             //If(varMobileOrDesktop = "mobile";
              
             
                 //guardo en memoria
-                SaveData(contactosClientesCollect, "contactosClientesData");
-                SaveData(contactosTransportesCollect, "contactosTransportesData");
-                SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" );
+                SaveData(contactosClientesCollect; "contactosClientesData");;
+                SaveData(contactosTransportesCollect; "contactosTransportesData");;
+                SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" );;
             
-                SaveData(tipoContactoOpcionesCollect , "tipoContactoOpcionesData" );
-                SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
+                SaveData(tipoContactoOpcionesCollect ; "tipoContactoOpcionesData" );;
+                SaveData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData" );;
                 
             
                 //cargo de las colecciones en  memoria
@@ -285,10 +286,11 @@ srcInicio As screen:
                 //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData"))
             
             )
+            */
         Visible: =false
         Width: =45
-        X: =477
-        Y: =89
+        X: =93
+        Y: =5
         ZIndex: =7
 
     BarcodeScanner2 As barcodeScanner:
