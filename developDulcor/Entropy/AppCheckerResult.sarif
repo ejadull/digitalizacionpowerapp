@@ -4273,35 +4273,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-DataSourceDefaultMaxRowsLimit",
-          "ruleIndex": 7
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "srcDetalle.img"
                 }
               ],
@@ -4602,23 +4573,6 @@
                 "level": "Medium",
                 "primaryCategory": "performance",
                 "whyFix": "No hay ninguna fórmula de control que haga referencia a este archivo multimedia, por lo que no es necesario. Si se quita, mejorará el rendimiento."
-              }
-            },
-            {
-              "id": "app-DataSourceDefaultMaxRowsLimit",
-              "messageStrings": {
-                "issue": {
-                  "text": "El límite de filas de datos para consultas que no se pueden delegar es mayor que 500"
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "howToFix": [
-                  "Actualice \"Límite de filas de datos para consultas no delegables\" en la configuración avanzada de la aplicación."
-                ],
-                "level": "Medium",
-                "primaryCategory": "performance",
-                "whyFix": "Un límite de filas de datos superior a 500 puede dar lugar a una aplicación más lenta al ejecutar consultas que no son delegables, ya que la aplicación tendrá que procesar todas las filas, en lugar de ejecutar la consulta en el servidor."
               }
             }
           ],

@@ -6,7 +6,7 @@
     "IsSampleData": false,
     "IsWritable": true,
     "LogicalName": "pss_destinos",
-    "MaxGetRowsCount": 2000,
+    "MaxGetRowsCount": 250,
     "Name": "Destino",
     "NativeCDSDataSourceInfoNameMapping": {
       "_ownerid_value": "Propietario",

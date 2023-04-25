@@ -93,7 +93,7 @@
     },
     "Author": "",
     "ContainsThirdPartyPcfControls": false,
-    "DefaultConnectedDataSourceMaxGetRowsCount": 2000,
+    "DefaultConnectedDataSourceMaxGetRowsCount": 250,
     "DocumentAppType": "Phone",
     "DocumentLayoutHeight": 1136,
     "DocumentLayoutLockOrientation": false,

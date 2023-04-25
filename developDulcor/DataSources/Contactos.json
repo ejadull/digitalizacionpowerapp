@@ -6,7 +6,7 @@
     "IsSampleData": false,
     "IsWritable": true,
     "LogicalName": "contact",
-    "MaxGetRowsCount": 2000,
+    "MaxGetRowsCount": 250,
     "Name": "Contactos",
     "NativeCDSDataSourceInfoNameMapping": {
       "_ownerid_value": "Propietario",
