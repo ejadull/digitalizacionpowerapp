@@ -66,7 +66,7 @@
         "Name": "DefaultStyle",
         "Parent": "Preloader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 346,
+        "PublishOrderIndex": 348,
         "Rules": [
           {
             "Category": "Data",
@@ -390,7 +390,7 @@
         "Name": "imgLoader",
         "Parent": "Preloader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 347,
+        "PublishOrderIndex": 349,
         "Rules": [
           {
             "Category": "Data",
@@ -668,7 +668,7 @@
         "Name": "lblLoaderText",
         "Parent": "Preloader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 348,
+        "PublishOrderIndex": 350,
         "Rules": [
           {
             "Category": "Data",

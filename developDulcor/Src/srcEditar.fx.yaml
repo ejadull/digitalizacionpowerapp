@@ -49,113 +49,6 @@
         txtTituloInput: ="Estás actualizando... "
         ZIndex: =2
 
-    IconAccept1_1 As icon.Check:
-        AccessibleLabel: =Self.Tooltip
-        BorderColor: =RGBA(32, 54, 71, 1)
-        Color: =RGBA(32, 54, 71, 1)
-        DisabledBorderColor: =RGBA(166, 166, 166, 1)
-        DisabledColor: =RGBA(244, 244, 244, 1)
-        Height: =60
-        Icon: =Icon.Check
-        OnSelect: |-
-            =//SubmitForm(frmEditar);;Collect(MyPixs; {} );;Navigate(srcOk;ScreenTransition.Cover)
-            If(
-                Connection.Connected,
-                UpdateContext({mostrarModalRefreshEdit: true});
-                //ONLINE, actualiza item y actualiza las collecciones
-                Patch(
-                    'Seguimiento Comprobantes',
-                    LookUp(
-                        'Seguimiento Comprobantes',
-                        pss_numerodeseguimiento = item3.pss_numerodeseguimiento
-                    ),
-                    {
-                        Observaciones: txtObservaciones_1.Text,
-                        'Foto Adjunta 1': foto1.Image,
-                        'Foto Adjunta 2': foto2.Image,
-                        'Estado de Recepción': estado_recepcion_obj.optionSet
-                        //'Foto Adjunta 3': foto3.Image;
-                        //Online: false;//se fambia porque fue modificado
-                    }
-                );
-                //Limpieza de los datos en el storage
-                Clear(seguimientoFacturasCollect);
-                ClearData("seguimientoFacturasData");
-            
-                // Actualizo mi coleccion desde el dataverse online hacia el storage
-                Collect(
-                    seguimientoFacturasCollect,
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    'Seguimiento Comprobantes', 
-                                    statecode exactin  "Activo", 
-                                    Lower(User().Email) in Lower(Transportista.'Correo electrónico')
-                                ), 
-                                "pss_fechacomprobante",SortOrder.Descending, 
-                                "pss_estadoderecepcion", SortOrder.Descending
-                            ), "IdLocal", GUID(), "Online", true
-                        )
-                );
-                ClearData("seguimientoFacturasData");
-                //guardo en memoria
-                SaveData(
-                    seguimientoFacturasCollect,
-                    "seguimientoFacturasData"
-                );
-                SaveData(
-                    tipoContactoOpcionesCollect,
-                    "tipoContactoOpcionesData"
-                );
-                SaveData(
-                    estadoRecepcionOpcionesCollect,
-                    "estadoRecepcionOpcionesData"
-                );
-                UpdateContext({mostrarModalRefreshEdit: false});
-                //flujo comun
-                Clear(MyPixs);
-                ResetForm(frmAlta_1);
-                Navigate( srcInicio, ScreenTransition.Cover),
-            
-                //OFFLINE actualizo ek registro en la collection para marcarlo como offline false
-                Patch(
-                    seguimientoFacturasCollect,
-                    LookUp(
-                        seguimientoFacturasCollect,
-                        IdLocal = item3.IdLocal
-                    ),
-                    {
-                        Observaciones: txtObservaciones_1.Text,
-                        'Foto Adjunta 1': foto1.Image,
-                        'Foto Adjunta 2': foto2.Image,
-                        Online: false,
-                        //se fambia porque fue modificado
-                        'Estado de Recepción': estado_recepcion_obj.optionSet
-                        //'Numero de Comprobante': txtComprobante_1.Text;
-                        //Cliente: cmbCliente_1.Selected;
-                        //Transportista: cmbTransportista.Selected;
-                        //Attachments: tatAttachments_1.Attachments;//no usa r attachments usar campo imagen o doc por separado
-                        // Name:txtName_2.Text;
-                        //IdLocal: GUID();            
-                        //'Foto Adjunta 3': foto3.Image;
-                        //'Foto Adjunta 4': foto3;// de momento no usar
-                    }
-                );
-                Clear(MyPixs);
-                ResetForm(frmAlta_1);
-                Navigate( srcInicio, ScreenTransition.Cover)
-            )
-        PaddingBottom: =5
-        PaddingLeft: =5
-        PaddingRight: =5
-        PaddingTop: =5
-        PressedFill: =RGBA(255, 255, 255, 0.3)
-        TabIndex: =0
-        Tooltip: ="Enviar elemento"
-        Width: =60
-        X: =566
-        ZIndex: =3
-
     frmEditar As form:
         AcceptsFocus: =false
         BorderColor: =RGBA(32, 54, 71, 1)
@@ -166,7 +59,7 @@
         OnSuccess: =Notify("Los datos se guardaron correctamente", NotificationType.Success, 1500)
         Width: =Parent.Width
         Y: =58
-        ZIndex: =4
+        ZIndex: =3
 
         "'Numero de Comprobante_DataCard2_1' As typedDataCard.textualEditCard":
             BorderColor: =RGBA(32, 54, 71, 1)
@@ -1123,7 +1016,7 @@
         Width: =66
         X: =158
         Y: =60
-        ZIndex: =5
+        ZIndex: =4
 
     Image5_1 As image:
         BorderColor: =RGBA(32, 54, 71, 1)
@@ -1135,7 +1028,7 @@
         Width: =133
         X: =479
         Y: =56
-        ZIndex: =6
+        ZIndex: =5
 
     Label1_2 As label:
         Align: =Align.Center
@@ -1149,7 +1042,7 @@
         Width: =125
         X: =129
         Y: =134
-        ZIndex: =7
+        ZIndex: =6
 
     Label1_3 As label:
         Align: =Align.Center
@@ -1163,7 +1056,7 @@
         Width: =109
         X: =491
         Y: =136
-        ZIndex: =8
+        ZIndex: =7
 
     BarcodeScanner1_1 As barcodeScanner:
         Color: =RGBA(0, 0, 0, 0)
@@ -1183,7 +1076,7 @@
         Width: =109
         X: =491
         Y: =62
-        ZIndex: =9
+        ZIndex: =8
 
     "galEstadosRecep_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
         BorderColor: =RGBA(32, 54, 71, 1)
@@ -1196,7 +1089,7 @@
         WrapCount: =3
         X: =103
         Y: =1011
-        ZIndex: =10
+        ZIndex: =9
 
         Title10_1 As label:
             Align: =Align.Center
@@ -1277,7 +1170,123 @@
         Tooltip: ="Cancelar elemento"
         Width: =60
         X: =13
+        ZIndex: =17
+
+    IconAccept1_1 As icon.Check:
+        AccessibleLabel: =Self.Tooltip
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =60
+        Icon: =Icon.Check
+        OnSelect: |-
+            =//SubmitForm(frmEditar);;Collect(MyPixs; {} );;Navigate(srcOk;ScreenTransition.Cover)
+            If(
+                Connection.Connected,
+                //ONLINE, actualiza item y actualiza las collecciones
+                UpdateContext({mostrarModalRefreshEdit: true});
+                Patch(
+                    'Seguimiento Comprobantes',
+                    LookUp(
+                        'Seguimiento Comprobantes',
+                        pss_numerodeseguimiento = item3.pss_numerodeseguimiento
+                    ),
+                    {
+                        Observaciones: txtObservaciones_1.Text,
+                        'Foto Adjunta 1': foto1.Image,
+                        'Foto Adjunta 2': foto2.Image,
+                        'Estado de Recepción': estado_recepcion_obj.optionSet
+                        //'Foto Adjunta 3': foto3.Image;
+                        //Online: false;//se fambia porque fue modificado
+                    }
+                );
+                //Limpieza de los datos en el storage
+                Clear(seguimientoFacturasCollect);
+                ClearData("seguimientoFacturasData");
+            
+                // Actualizo mi coleccion desde el dataverse online hacia el storage
+                Collect(
+                    seguimientoFacturasCollect,
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    'Seguimiento Comprobantes', 
+                                    statecode exactin  "Activo", 
+                                    Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                                ), 
+                                "pss_fechacomprobante",SortOrder.Descending, 
+                                "pss_estadoderecepcion", SortOrder.Descending
+                            ), "IdLocal", GUID(), "Online", true
+                        )
+                );
+                ClearData("seguimientoFacturasData");
+                //guardo en memoria
+                SaveData(
+                    seguimientoFacturasCollect,
+                    "seguimientoFacturasData"
+                );
+                SaveData(
+                    tipoContactoOpcionesCollect,
+                    "tipoContactoOpcionesData"
+                );
+                SaveData(
+                    estadoRecepcionOpcionesCollect,
+                    "estadoRecepcionOpcionesData"
+                );
+                UpdateContext({mostrarModalRefreshEdit: false});
+                //flujo comun
+                Clear(MyPixs);
+                ResetForm(frmAlta_1);
+                Navigate( srcInicio, ScreenTransition.Cover),
+            
+                //OFFLINE actualizo e registro en la collection para marcarlo como offline false
+                UpdateContext({mostrarModalRefreshEdit: true});
+                Patch(
+                    seguimientoFacturasCollect,
+                    LookUp(
+                        seguimientoFacturasCollect,
+                        IdLocal = item3.IdLocal
+                    ),
+                    {
+                        Observaciones: txtObservaciones_1.Text,
+                        'Foto Adjunta 1': foto1.Image,
+                        'Foto Adjunta 2': foto2.Image,
+                        Online: false,
+                        //se fambia porque fue modificado
+                        'Estado de Recepción': estado_recepcion_obj.optionSet
+                        //'Numero de Comprobante': txtComprobante_1.Text;
+                        //Cliente: cmbCliente_1.Selected;
+                        //Transportista: cmbTransportista.Selected;
+                        //Attachments: tatAttachments_1.Attachments;//no usa r attachments usar campo imagen o doc por separado
+                        // Name:txtName_2.Text;
+                        //IdLocal: GUID();            
+                        //'Foto Adjunta 3': foto3.Image;
+                        //'Foto Adjunta 4': foto3;// de momento no usar
+                    }
+                );
+                Clear(MyPixs);
+                ResetForm(frmAlta_1);
+                UpdateContext({mostrarModalRefreshEdit: false});
+                Navigate( srcInicio, ScreenTransition.Cover)
+            )
+        PaddingBottom: =5
+        PaddingLeft: =5
+        PaddingRight: =5
+        PaddingTop: =5
+        PressedFill: =RGBA(255, 255, 255, 0.3)
+        TabIndex: =0
+        Tooltip: ="Enviar elemento"
+        Width: =60
+        X: =566
         ZIndex: =18
+
+    Preloader_2 As Preloader:
+        Color: =RGBA(0, 121, 187, 1)
+        IsLoading: =mostrarModalRefreshEdit
+        Text: ="GUARDANDO..."
+        Visible: =Preloader_2.IsLoading
+        ZIndex: =19
 
     ModalRefresh_1 As group:
         Height: =5
@@ -1290,19 +1299,19 @@
             BorderColor: =RGBA(32, 54, 71, 1)
             Fill: =RGBA(230, 230, 230, 0.7)
             Height: =1136
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             Width: =640
-            ZIndex: =11
+            ZIndex: =10
 
         Rectangle4_1 As rectangle:
             BorderColor: =RGBA(32, 54, 71, 1)
             Fill: =RGBA(255, 255, 255, 1)
             Height: =502
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             Width: =586
             X: =27
             Y: =241
-            ZIndex: =12
+            ZIndex: =11
 
         Label3_1 As label:
             Align: =Align.Center
@@ -1312,10 +1321,10 @@
             Height: =70
             Size: =21
             Text: ="Aguarde un momento..."
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             Width: =640
             Y: =386
-            ZIndex: =13
+            ZIndex: =12
 
         Icon7_1 As icon.Globe:
             BorderColor: =RGBA(32, 54, 71, 1)
@@ -1323,10 +1332,10 @@
             DisabledBorderColor: =RGBA(166, 166, 166, 1)
             DisabledColor: =RGBA(244, 244, 244, 1)
             Icon: =Icon.Globe
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             X: =455
             Y: =488
-            ZIndex: =14
+            ZIndex: =13
 
         Icon8_1 As icon.Sync:
             BorderColor: =RGBA(32, 54, 71, 1)
@@ -1334,10 +1343,10 @@
             DisabledBorderColor: =RGBA(166, 166, 166, 1)
             DisabledColor: =RGBA(244, 244, 244, 1)
             Icon: =Icon.Sync
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             X: =288
             Y: =488
-            ZIndex: =15
+            ZIndex: =14
 
         Label6_1 As label:
             Align: =Align.Center
@@ -1348,11 +1357,11 @@
             Height: =78
             Size: =21
             Text: =">>>>>>"
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             Width: =627
             X: =13
             Y: =584
-            ZIndex: =16
+            ZIndex: =15
 
         Icon9_1 As icon.Database:
             BorderColor: =RGBA(32, 54, 71, 1)
@@ -1360,8 +1369,8 @@
             DisabledBorderColor: =RGBA(166, 166, 166, 1)
             DisabledColor: =RGBA(244, 244, 244, 1)
             Icon: =Icon.Database
-            Visible: =mostrarModalRefreshEdit
+            Visible: =false //mostrarModalRefreshEdit
             X: =133
             Y: =488
-            ZIndex: =17
+            ZIndex: =16
 
