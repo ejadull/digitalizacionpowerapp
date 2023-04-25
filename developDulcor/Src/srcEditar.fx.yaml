@@ -54,7 +54,7 @@
         BorderColor: =RGBA(32, 54, 71, 1)
         DataSource: =seguimientoFacturasCollect //'Seguimiento Comprobantes'// 
         Height: =953
-        Item: =item3
+        Item: =LookUp(seguimientoFacturasCollect, IdLocal = miFactura.IdLocal)//item3
         OnFailure: =Notify("Ocurió un error al intentar guardar el comprobante", NotificationType.Error, 1500) 
         OnSuccess: =If(Connection.Connected,Notify("Los datos se guardaron correctamente", NotificationType.Success, 1500),Notify("Los datos se guardaron en el dispositivo", NotificationType.Success, 1500))
         Width: =Parent.Width

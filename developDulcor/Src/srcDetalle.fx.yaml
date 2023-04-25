@@ -21,7 +21,7 @@
         BorderColor: =RGBA(32, 54, 71, 1)
         DataSource: = seguimientoFacturasCollect
         Height: =Parent.Height - frmDetalle.Y
-        Item: =_factura
+        Item: =LookUp(seguimientoFacturasCollect, IdLocal = miFactura.IdLocal)   //_factura
         Width: =Parent.Width
         Y: =estadoRecepcion.Height
         ZIndex: =2
@@ -999,7 +999,7 @@
             "", RGBA(237, 237, 237, 1)
             )
         mostrarIcono: =false
-        txtTituloInput: ="Comprobante " & _factura.'Numero de Comprobante'
+        txtTituloInput: ="Comprobante " & LookUp(seguimientoFacturasCollect, IdLocal = miFactura.IdLocal).'Numero de Comprobante'
         ZIndex: =4
 
     IconAccept3 As icon.Check:
