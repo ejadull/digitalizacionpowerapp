@@ -4,24 +4,26 @@ srcInicio As screen:
     ImagePosition: =ImagePosition.Fill
     LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
     OnVisible: |-
-        =If(
-            Connection.Connected,
+        =/*
+        If(
+            Connection.Connected;
             //ONLINE consulto de dataverse
-            Collect(seguimientoFacturasCollect,
+            Collect(seguimientoFacturasCollect;
                     AddColumns(SortByColumns(
-                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", User().Email = Transportista.'Correo electrónico'), //pss_transportista
-                        "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
-                );
-            ClearData("seguimientoFacturasData");
+                        Filter('Seguimiento Comprobantes'; statecode exactin  "Activo"; User().Email = Transportista.'Correo electrónico'); //pss_transportista
+                        "pss_fechacomprobante";SortOrder.Descending; "pss_estadoderecepcion"; SortOrder.Descending); "IdLocal"; GUID(); "Online"; true)
+                );;
+            ClearData("seguimientoFacturasData");;
             //guardo en memoria 
-            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" )
+            SaveData(seguimientoFacturasCollect; "seguimientoFacturasData" )
             //OFFLINE cargo del local si habia
             //LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
-        );
+        );;
         LoadData(
-            seguimientoFacturasCollect,
+            seguimientoFacturasCollect;
             "seguimientoFacturasData"
-        );
+        );;
+        */
         UpdateContext(
             {
                 estado_recepcion: "",
