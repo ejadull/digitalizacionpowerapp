@@ -1204,7 +1204,7 @@
                 //Limpieza de los datos en el storage
                 Clear(seguimientoFacturasCollect);
                 ClearData("seguimientoFacturasData");
-                Collect(// Actualizo mi coleccion desde el dataverse online hacia el storage
+                ClearCollect(//Collect(// Actualizo mi coleccion desde el dataverse online hacia el storage
                     seguimientoFacturasCollect,
                     AddColumns(
                         SortByColumns(

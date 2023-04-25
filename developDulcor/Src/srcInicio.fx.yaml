@@ -149,7 +149,13 @@ srcInicio As screen:
             Height: =60
             Icon: =Icon.ChevronRight
             OnSelect: |-
-                =ViewForm(frmDetalle); Navigate(srcDetalle,ScreenTransition.Cover, { factura : ListadoSeguimiento.Selected});UpdateContext({ barcodeFront : ""})
+                =ViewForm(frmDetalle); 
+                Navigate(
+                    srcDetalle,
+                    ScreenTransition.Cover,
+                    { _factura: ListadoSeguimiento.Selected }
+                );
+                UpdateContext({barcodeFront: ""})
             PaddingBottom: =10
             PaddingLeft: =10
             PaddingRight: =10
@@ -492,18 +498,22 @@ srcInicio As screen:
                 =UpdateContext(
                     {
                         //estado_recepcion: ThisItem.nombre;
-                        seguimientoList: SortByColumns(
+                        seguimientoList: 
+                        //SortByColumns(
+                            Distinct( 
                             Filter(
                                 seguimientoFacturasCollect,
                                 txtBusqueda.Text in 'Numero de Comprobante',
                                 ThisItem.nombre in Text('Estado de Recepción')
                                 //estado_recepcion = Text('Estado de Recepción');
                                 //Lower(User().Email) in Lower(Transportista.'Correo electrónico')
-                            ),
+                            )
+                            ,'Numero de Comprobante' )
                             
-                            "pss_ordenestado",
-                            SortOrder.Ascending
-                        )
+                            
+                        //    "pss_ordenestado";
+                        //    SortOrder.Ascending
+                        //)
                     }
                 ); 
             PaddingLeft: =0
