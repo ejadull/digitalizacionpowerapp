@@ -3,7 +3,7 @@ srcInicio As screen:
     Fill: =RGBA(255, 255, 255, 1) 
     ImagePosition: =ImagePosition.Fill
     LoadingSpinnerColor: =RGBA(100, 118, 132, 1)
-    OnVisible: |-
+    OnVisible: |
         =If(
             Connection.Connected,
             //ONLINE consulto de dataverse
@@ -23,21 +23,6 @@ srcInicio As screen:
             seguimientoFacturasCollect,
             "seguimientoFacturasData"
         );
-        UpdateContext(
-            {
-                estado_recepcion: "",
-                seguimientoList: SortByColumns(
-                    Filter(
-                        seguimientoFacturasCollect,
-                        //txtBusqueda.Text in 'Numero de Comprobante'
-                        OrdenEstado = 0,
-                        Online = true
-                    ),
-                    "pss_ordenestado",
-                    SortOrder.Ascending
-                )
-            }
-        )
 
     "ListadoSeguimiento As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
         BorderColor: =RGBA(32, 54, 71, 1)
