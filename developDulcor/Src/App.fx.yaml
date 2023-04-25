@@ -3,13 +3,24 @@ App As appinfo:
     OnStart: |-
         =//declaracion de variables GLOBALES, colecciones y VARS
         Set(showLoader, true);
-        //SIEMPRE
+        //ONLINE
+        If(
+            Connection.Connected,
+            Set(locMensaje, "Cargado datos desde Dynamics"),
+            Set(locMensaje, "Cargado datos desde su Dispositivo")
+        );
+        
         If(
             Connection.Connected,
             //Limpieza
-            Clear(tipoContactoOpcionesCollect);Clear(estadoRecepcionOpcionesCollect);Clear(variablesEntornoCollect) 
+            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);Clear(variablesEntornoCollect);
+            ClearData("contactosClientesData"); 
+            ClearData("contactosTransportesData" );
+            ClearData("seguimientoFacturasData");
+            ClearData("variablesEntornoData")
         );
         
+        // SIEMPRE
         Collect(tipoContactoOpcionesCollect,  Table(
                 {
                     nombre: "Cliente",
@@ -24,7 +35,7 @@ App As appinfo:
                     valor: 100000002
                 }
             ));
-            
+         
         Collect(estadoRecepcionOpcionesCollect, Table(
                 {
                     nombre: "Recibido",
@@ -42,41 +53,30 @@ App As appinfo:
                     valor: 100000002//'Estado de Recepción (Seguimiento Comprobantes)'.Rechazado//
                 }
             ));
+        SaveData(tipoContactoOpcionesCollect, "tipoContactoOpcionesData" );
+        SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
         
         Collect(variablesEntornoCollect, Table());
-        SaveData(tipoContactoOpcionesCollect , "tipoContactoOpcionesData" );
-        SaveData(estadoRecepcionOpcionesCollect, "estadoRecepcionOpcionesData" );
         SaveData(variablesEntornoCollect, "variablesEntornoData" );
          
-        
-        //ONLINE
-        If(
-            Connection.Connected,
-            //Limpieza
-            Clear(contactosClientesCollect);Clear(contactosTransportesCollect);Clear(seguimientoFacturasCollect);//Clear(variablesEntornoCollect);;
-            ClearData("contactosClientesData"); 
-            ClearData("contactosTransportesData" );
-            ClearData("seguimientoFacturasData");
-            //ClearData("variablesEntornoData")
-        );
-        
-        
         If(
             Connection.Connected,
             //consulto de dataverse
             
             Concurrent(
+                //cargo el Record del transportista que esta usando la aplicacion
                 Collect(variablesEntornoCollect, Table(
                     {
                         transportistaActual: First(
                             Filter(Contactos, 
                                 statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Transporte"   
                                 &&  !IsBlank(pss_razonsocial) && pss_razonsocial <> "" 
-                                && Lower(emailaddress1) = Lower(User().Email)
+                                && Lower(emailaddress1) = Lower(User().Email) // <<< email del user actual tiene que estar en el contacto
                             )
                         )
                     }
                 ));
+                //cargo contactos tipo clientes
                 Collect(contactosClientesCollect,
                     SortByColumns(Filter(Contactos, statecode exactin  "Activo" &&  pss_tipodecontactoseguimiento exactin "Cliente"  &&  !IsBlank(pss_cuit) && pss_cuit <> ""), "pss_nombrefullcontacto", SortOrder.Ascending) 
                     
@@ -102,11 +102,10 @@ App As appinfo:
                 */
                 
             );
-         
-            ClearData("contactosClientesData"); 
-            ClearData( "contactosTransportesData" );
+            //los borro al inicio
+            //ClearData("contactosClientesData");; 
+            //ClearData( "contactosTransportesData" );;
             //ClearData("seguimientoFacturasData");;
-            ClearData("transportistaActualTable");
         
             //guardo en memoria
             SaveData(contactosClientesCollect, "contactosClientesData");
@@ -123,12 +122,12 @@ App As appinfo:
             //cargo de las colecciones en  memoria
             LoadData(contactosClientesCollect, "contactosClientesData");
             LoadData(contactosTransportesCollect, "contactosTransportesData");
-           // LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
             LoadData(variablesEntornoCollect, "variablesEntornoData");
+           // LoadData(seguimientoFacturasCollect; "seguimientoFacturasData");;
         
             //no haria falta en el offline
-           // LoadData(tipoContactoOpcionesCollect; "tipoContactoOpcionesData");;
-           // LoadData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData")
+            //LoadData(tipoContactoOpcionesCollect; "tipoContactoOpcionesData");;
+            //LoadData(estadoRecepcionOpcionesCollect; "estadoRecepcionOpcionesData")
         
         );
         
@@ -137,7 +136,7 @@ App As appinfo:
         //cargo datos de seguimiento luego de establecer el transportista
         If(
             Connection.Connected,
-            //consulto de dataverse
+            //ONLINE consulto de dataverse
             Collect(seguimientoFacturasCollect,
                     AddColumns(SortByColumns(
                         Filter('Seguimiento Comprobantes', statecode exactin  "Activo", Lower(User().Email) in Lower(Transportista.'Correo electrónico')), //pss_transportista
@@ -146,7 +145,9 @@ App As appinfo:
             ClearData("seguimientoFacturasData");
         
             //guardo en memoria 
-            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" ) 
+            SaveData(seguimientoFacturasCollect, "seguimientoFacturasData" ),
+            //OFFLINE cargo del local si habia
+            LoadData(seguimientoFacturasCollect, "seguimientoFacturasData");
         );
         
         Set(showLoader, false)

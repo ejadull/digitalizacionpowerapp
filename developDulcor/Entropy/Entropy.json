@@ -385,7 +385,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "04/25/2023 02:55:02",
+  "HeaderLastSavedDateTimeUTC": "04/25/2023 03:51:47",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
@@ -481,7 +481,7 @@
     "Destino\\pss_destinos_statecode": 75,
     "Destino\\pss_destinos_statuscode": 76,
     "DropDownSample": 85,
-    "estadoRecepcionOpcionesCollect": 94,
+    "estadoRecepcionOpcionesCollect": 95,
     "MyPixs": 89,
     "RadioSample": 86,
     "Seguimiento Comprobantes": 82,
@@ -490,7 +490,7 @@
     "Seguimiento Comprobantes\\pss_seguimientocomprobantes_statecode": 1,
     "Seguimiento Comprobantes\\pss_seguimientocomprobantes_statuscode": 2,
     "seguimientoFacturasCollect": 90,
-    "tipoContactoOpcionesCollect": 95,
+    "tipoContactoOpcionesCollect": 93,
     "Usuarios": 87,
     "Usuarios\\default.cds_systemuser_views": 79,
     "Usuarios\\msdyn_systemuser_msdyn_agenttype": 60,
@@ -522,7 +522,7 @@
     "Usuarios\\systemuser_preferredemailcode": 61,
     "Usuarios\\systemuser_preferredphonecode": 63,
     "Usuarios\\systemuser_setupuser": 46,
-    "variablesEntornoCollect": 93
+    "variablesEntornoCollect": 94
   },
   "OrderGroupControls": {
     "GroupNew": {

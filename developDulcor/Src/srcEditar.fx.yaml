@@ -1220,7 +1220,6 @@
                             ), "IdLocal", GUID(), "Online", true
                         )
                 );
-                ClearData("seguimientoFacturasData");
                 //guardo en memoria
                 SaveData(
                     seguimientoFacturasCollect,
