@@ -1208,10 +1208,13 @@
                     seguimientoFacturasCollect,
                     AddColumns(
                         SortByColumns(
-                            Filter(
-                                'Seguimiento Comprobantes',
-                                statecode exactin "Activo",
-                                Lower(User().Email) in Lower(Transportista.'Correo electrónico')
+                            Filter(//fix delegacion
+                                Filter(
+                                    'Seguimiento Comprobantes',
+                                    statecode = 0 // "Activo"
+                                ),
+                                //Lower(User().Email) = Lower(Transportista.'Correo electrónico')
+                                User().Email = Transportista.'Correo electrónico'
                             ),
                             "pss_fechacomprobante",
                             SortOrder.Descending,
