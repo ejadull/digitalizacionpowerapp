@@ -1190,7 +1190,7 @@
                     'Seguimiento Comprobantes',
                     LookUp(
                         'Seguimiento Comprobantes',
-                        pss_numerodeseguimiento = item3.pss_numerodeseguimiento
+                        'Numero de Seguimiento' = item3.'Numero de Seguimiento'
                     ),
                     {
                         Observaciones: txtObservaciones_1.Text,
@@ -1210,7 +1210,7 @@
                         SortByColumns(
                             Filter(//fix delegacion
                                 'Seguimiento Comprobantes',
-                                statecode in "Activo",
+                                Estado in "Activo",
                                 //Lower(User().Email) = Lower(Transportista.'Correo electrónico')
                                 User().Email = Transportista.'Correo electrónico'
                             ),

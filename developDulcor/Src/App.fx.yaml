@@ -94,7 +94,7 @@ App As appinfo:
                             transportistaActual: First(
                                 Filter(
                                     Contactos,
-                                    statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> "" && Lower(emailaddress1) = Lower(User().Email)// <<< email del user actual tiene que estar en el contacto
+                                    Estado exactin "Activo" && 'Tipo de contacto Seguimiento' exactin "Transporte" && !IsBlank('Razon Social') && 'Razon Social' <> "" && Lower('Correo electrónico') = Lower(User().Email)// <<< email del user actual tiene que estar en el contacto
                                 )
                             )
                         }
@@ -105,7 +105,7 @@ App As appinfo:
                     SortByColumns(
                         Filter(
                             Contactos,
-                            statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Cliente" && !IsBlank(pss_cuit) && pss_cuit <> ""
+                            Estado exactin "Activo" && 'Tipo de contacto Seguimiento' exactin "Cliente" && !IsBlank(Cuit) && Cuit <> ""
                         ),
                         "pss_nombrefullcontacto",
                         SortOrder.Ascending
@@ -116,7 +116,7 @@ App As appinfo:
                     SortByColumns(
                         Filter(
                             Contactos,
-                            statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> ""
+                            Estado exactin "Activo" && 'Tipo de contacto Seguimiento' exactin "Transporte" && !IsBlank('Razon Social') && 'Razon Social' <> ""
                         ),
                         "pss_nombrefullcontacto",
                         SortOrder.Ascending
@@ -188,4 +188,11 @@ App As appinfo:
             LoadData(seguimientoFacturasCollect; "seguimientoFacturasData")
         );;
         */
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
 

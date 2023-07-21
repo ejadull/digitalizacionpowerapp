@@ -181,16 +181,16 @@
             Filter(//registros que estan con bandera offline y id principal para seperar los nuevos
                             seguimientoFacturasCollect,
                             Online = false && Or(
-                                IsEmpty(pss_seguimientocomprobantesid),
-                                IsBlank(pss_seguimientocomprobantesid)
+                                false,
+                                IsBlank('Seguimiento Comprobantes')
                             )
                         ),
                         //);"IdLocal"; "Online");
                         ListaModificados: Filter(//registros que estan con bandera offline y id principal que no estan vacios para separar los modificados
                             seguimientoFacturasCollect,
                             Online = false && And(
-                                !IsEmpty(pss_seguimientocomprobantesid),
-                                !IsBlank(pss_seguimientocomprobantesid)
+                                !false,
+                                !IsBlank('Seguimiento Comprobantes')
                             )
                         )
                     }
@@ -258,24 +258,24 @@
                 Collect(contactosClientesCollect,
                     SortByColumns(
                         Filter(Contactos, 
-                                statecode exactin  "Activo" &&  
-                                pss_tipodecontactoseguimiento exactin "Cliente"  &&  
-                                !IsBlank(pss_cuit) && pss_cuit <> ""), 
+                                Estado exactin  "Activo" &&  
+                                'Tipo de contacto Seguimiento' exactin "Cliente"  &&  
+                                !IsBlank(Cuit) && Cuit <> ""), 
                                 "pss_nombrefullcontacto", SortOrder.Ascending) 
                     
                 ),
                 Collect(contactosTransportesCollect,
                 SortByColumns(
                     Filter(Contactos, 
-                    statecode exactin  "Activo" &&  
-                    pss_tipodecontactoseguimiento exactin "Transporte"  &&  
-                    !IsBlank(pss_razonsocial) && pss_razonsocial <> ""), 
+                    Estado exactin  "Activo" &&  
+                    'Tipo de contacto Seguimiento' exactin "Transporte"  &&  
+                    !IsBlank('Razon Social') && 'Razon Social' <> ""), 
                     "pss_nombrefullcontacto", SortOrder.Ascending) 
                     
                 ),
                 Collect(seguimientoFacturasCollect,
                     AddColumns(
-                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo" ), 
+                        Filter('Seguimiento Comprobantes', Estado exactin  "Activo" ), 
                         "IdLocal", GUID(), "Online", true
                     )
                 )
@@ -522,8 +522,8 @@
                         ListaModificados: Filter(//registros que estan con bandera offline y id principal que no estan vacios para separar los modificados
                             seguimientoFacturasCollect,
                             Online = false && And(
-                                !IsEmpty(pss_seguimientocomprobantesid),
-                                !IsBlank(pss_seguimientocomprobantesid)
+                                !false,
+                                !IsBlank('Seguimiento Comprobantes')
                             )
                         )
                     }
@@ -573,7 +573,7 @@
                         SortByColumns(
                             Filter(
                                 Contactos,
-                                statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Cliente" && !IsBlank(pss_cuit) && pss_cuit <> ""
+                                Estado exactin "Activo" && 'Tipo de contacto Seguimiento' exactin "Cliente" && !IsBlank(Cuit) && Cuit <> ""
                             ),
                             "pss_nombrefullcontacto",
                             SortOrder.Ascending
@@ -584,7 +584,7 @@
                         SortByColumns(
                             Filter(
                                 Contactos,
-                                statecode exactin "Activo" && pss_tipodecontactoseguimiento exactin "Transporte" && !IsBlank(pss_razonsocial) && pss_razonsocial <> ""
+                                Estado exactin "Activo" && 'Tipo de contacto Seguimiento' exactin "Transporte" && !IsBlank('Razon Social') && 'Razon Social' <> ""
                             ),
                             "pss_nombrefullcontacto",
                             SortOrder.Ascending
@@ -597,7 +597,7 @@
                             SortByColumns(
                                 Filter(//fix delegacion
                                     'Seguimiento Comprobantes',
-                                    statecode in "Activo",
+                                    Estado in "Activo",
                                     //Lower(User().Email) = Lower(Transportista.'Correo electrónico')
                                     User().Email = Transportista.'Correo electrónico'
                                 ),

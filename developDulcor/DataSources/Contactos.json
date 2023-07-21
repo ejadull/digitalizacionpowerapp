@@ -130,6 +130,7 @@
       "Contact_Letters": "Cartas",
       "Contact_MailboxTrackingFolder": "Carpetas de seguimiento automático del buzón",
       "contact_master_contact": "Contactos (contact_master_contact)",
+      "contact_msdyn_copilottranscripts": "Transcripciones de Copilot",
       "contact_msdyn_ocliveworkitems": "Conversaciones (contact_msdyn_ocliveworkitems)",
       "contact_msdyn_ocsessions": "Sesiones",
       "contact_msfp_alerts": "Alerta de Customer Voice",
@@ -224,8 +225,11 @@
       "msdyn_contact_msdyn_ocliveworkitem_Customer": "Conversaciones (msdyn_contact_msdyn_ocliveworkitem_Customer)",
       "msdyn_contact_msdyn_salessuggestion": "Sugerencias",
       "msdyn_contactkpiid": "KPI",
+      "msdyn_decisioninfluencetag": "Etiquetas de influencia en la decisión",
       "msdyn_gdproptout": "Optar por no recibir RGPD",
+      "msdyn_isassistantinorgchart": "Es asistente",
       "msdyn_linkeditemvalidity_polymorphic_contactid": "Validaciones de atributo de entidad vinculada",
+      "msdyn_msdyn_conversationparticipantinsights_contact_msdyn_user": "Conversation Participant Insights",
       "msdyn_msdyn_preferredagent_contact_msdyn_recordId": "Agentes preferidos",
       "msdyn_msdyn_taggedrecord_contact_msdyn_dynamicsrecordid": "Tagged Records",
       "msdyn_orgchangestatus": "Marca No está en la compañía",
@@ -234,6 +238,8 @@
       "msdyn_salesroutingdiagnostic_contact_msdyn_target": "salesroutingdiagnostics",
       "msdyn_segmentid": "Id. de segmento",
       "msdyn_sequencetarget_contact_msdyn_target": "Destinos de secuencia",
+      "msft_datastate": "msft_DataState",
+      "new_contact_msdyn_orgchartnodeupdated_msdyn_noderecordupdated": "Entidades de nodo de organigrama de Microsoft",
       "nickname": "Sobrenombre",
       "numberofchildren": "Nº de hijos",
       "onholdtime": "Período de retención (minutos)",
@@ -978,6 +984,48 @@
     "Type": "OptionSetInfo"
   },
   {
+    "DisplayName": "Etiquetas de influencia en la decisión (Contactos)",
+    "Name": "contact_msdyn_decisioninfluencetag",
+    "OptionSetInfoNameMapping": {
+      "0": "Responsable de toma de decisiones",
+      "1": "\"Influencer\"",
+      "2": "Bloqueador",
+      "3": "Desconocido"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_decisioninfluencetag",
+        "OptionSetReferenceEntityName": "Contactos"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_decisioninfluencetag",
+    "RelatedEntityName": "Contactos",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Es asistente (Contactos)",
+    "Name": "contact_msdyn_isassistantinorgchart",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Sí"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_isassistantinorgchart",
+        "OptionSetReferenceEntityName": "Contactos"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_isassistantinorgchart",
+    "RelatedEntityName": "Contactos",
+    "Type": "OptionSetInfo"
+  },
+  {
     "DisplayName": "Marca No está en la compañía (Contactos)",
     "Name": "contact_msdyn_orgchangestatus",
     "OptionSetInfoNameMapping": {
@@ -1207,6 +1255,26 @@
     },
     "OptionSetTypeKey": "BooleanType",
     "RelatedColumnInvariantName": "msdyn_gdproptout",
+    "RelatedEntityName": "Contactos",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "DataState",
+    "Name": "msft_datastate",
+    "OptionSetInfoNameMapping": {
+      "0": "Default",
+      "1": "Retain"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msft_datastate",
+        "OptionSetReferenceEntityName": "Contactos"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msft_datastate",
     "RelatedEntityName": "Contactos",
     "Type": "OptionSetInfo"
   },

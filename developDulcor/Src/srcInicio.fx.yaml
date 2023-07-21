@@ -9,7 +9,7 @@ srcInicio As screen:
             //ONLINE consulto de dataverse
             Collect(seguimientoFacturasCollect,
                     AddColumns(SortByColumns(
-                        Filter('Seguimiento Comprobantes', statecode exactin  "Activo", User().Email = Transportista.'Correo electrónico'), //pss_transportista
+                        Filter('Seguimiento Comprobantes', Estado exactin  "Activo", User().Email = Transportista.'Correo electrónico'), //pss_transportista
                         "pss_fechacomprobante",SortOrder.Descending, "pss_estadoderecepcion", SortOrder.Descending), "IdLocal", GUID(), "Online", true)
                 );
             ClearData("seguimientoFacturasData");
@@ -203,7 +203,7 @@ srcInicio As screen:
         BorderColor: =RGBA(179, 179, 179, 1)
         Clear: =true
         Color: =RGBA(0, 0, 0, 1)
-        Default: =If(!IsEmpty(barcodeFront),barcodeFront,"")
+        Default: =If(!false,barcodeFront,"")
         DisabledBorderColor: =RGBA(166, 166, 166, 1)
         DisabledColor: =RGBA(166, 166, 166, 1)
         DisabledFill: =RGBA(244, 244, 244, 1)

@@ -18,7 +18,7 @@
       "Name": "txtTituloInput",
       "PropertyDataTypeKey": "String",
       "Tooltip": "Propiedad personalizada",
-      "Type": "{\"Version\":\"1.330\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"String\",\"EnumString\":\"\",\"Type\":[]}}"
+      "Type": "{\"Version\":\"1.334\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"String\",\"EnumString\":\"\",\"Type\":[]}}"
     }
   ],
   "FirstParty": true,
@@ -29,7 +29,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638180058148812918",
+  "LastModifiedTimestamp": "638255597180000950",
   "Name": "c5729d04af6c423983eac49abb2eb7db",
   "OverridableProperties": {},
   "TemplateOriginalName": "2294ad5842944585981d943c661e6c05",
